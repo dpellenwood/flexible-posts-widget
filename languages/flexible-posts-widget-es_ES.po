@@ -1,0 +1,196 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Flexible Posts Widget en español\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/flexible-posts-widget\n"
+"POT-Creation-Date: 2013-10-21 14:34:24+00:00\n"
+"PO-Revision-Date: 2013-10-21 22:39+0100\n"
+"Last-Translator: Eduardo Larequi <elarequi@gmail.com>\n"
+"Language-Team: PNTE <blogs@educacion.navarra.es>\n"
+"Language: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: flexible-posts-widget.php:72
+msgid "Display posts as widget items"
+msgstr "Muestra las entradas como elementos de un widget"
+
+#: flexible-posts-widget.php:86
+msgid "Getting terms..."
+msgstr "Obteniendo términos..."
+
+#: flexible-posts-widget.php:87 views/admin.php:50
+msgid "Select terms:"
+msgstr "Seleccionar términos:"
+
+#: flexible-posts-widget.php:88 flexible-posts-widget.php:375
+#: views/admin.php:68
+msgid "No terms found."
+msgstr "No se ha encontrado ningún término."
+
+#: flexible-posts-widget.php:184 flexible-posts-widget.php:273
+msgid "Publish Date"
+msgstr "Fecha de publicación"
+
+#: flexible-posts-widget.php:185 flexible-posts-widget.php:274
+msgid "Title"
+msgstr "Título"
+
+#: flexible-posts-widget.php:186 flexible-posts-widget.php:275
+msgid "Menu Order"
+msgstr "Orden de menú"
+
+#: flexible-posts-widget.php:187 flexible-posts-widget.php:276
+#: views/admin.php:31
+msgid "Post ID"
+msgstr "ID de entrada"
+
+#: flexible-posts-widget.php:188 flexible-posts-widget.php:277
+msgid "Author"
+msgstr "Autor"
+
+#: flexible-posts-widget.php:189 flexible-posts-widget.php:278
+msgid "Post Slug"
+msgstr "Nombre de la entrada (slug)"
+
+#: flexible-posts-widget.php:190 flexible-posts-widget.php:279
+msgid "Comment Count"
+msgstr "Total de comentarios"
+
+#: flexible-posts-widget.php:191 flexible-posts-widget.php:280
+msgid "Random"
+msgstr "Al azar"
+
+#: flexible-posts-widget.php:194 flexible-posts-widget.php:283
+msgid "Ascending"
+msgstr "Ascendente"
+
+#: flexible-posts-widget.php:195 flexible-posts-widget.php:284
+msgid "Descending"
+msgstr "Descendente"
+
+#: views/admin.php:15
+msgid "Widget title:"
+msgstr "Título del widget:"
+
+#: views/admin.php:21
+msgid "Get posts by"
+msgstr "Obtener entradas por:"
+
+#: views/admin.php:29
+msgid "Post Type"
+msgstr "Tipos de contenido"
+
+#: views/admin.php:30
+msgid "Taxonomy &amp; Term"
+msgstr "Taxonomías y términos"
+
+#: views/admin.php:30
+msgid "Tax &amp; Term"
+msgstr "Taxonomías y términos"
+
+#: views/admin.php:31
+msgid "ID"
+msgstr "IDs"
+
+#: views/admin.php:40
+msgid "Select a taxonomy:"
+msgstr "Seleccionar una taxonomía:"
+
+#: views/admin.php:42
+msgid "Ignore Taxonomy &amp; Term"
+msgstr "Ignorar taxonomías y términos"
+
+#: views/admin.php:79
+msgid "Comma-separated list of post IDs:"
+msgstr "Lista de IDs de entradas, separado por comas:"
+
+#: views/admin.php:81
+msgid "Will override settings on the Post Type and Taxonomy &amp; Term tabs."
+msgstr ""
+"Anulará la configuración de tipos de contenido y de términos de taxonomía"
+
+#: views/admin.php:81
+msgid "See documentation."
+msgstr "Consultar la documentación"
+
+#: views/admin.php:92
+msgid "Display options"
+msgstr "Opciones de visualización"
+
+#: views/admin.php:95
+msgid "Ignore sticky posts?"
+msgstr "¿Quieres ignorar las entradas fijas?"
+
+#: views/admin.php:98
+msgid "Number of posts to show:"
+msgstr "Número de entradas que mostrar:"
+
+#: views/admin.php:102
+msgid "Number of posts to skip:"
+msgstr "Número de entradas que saltar:"
+
+#: views/admin.php:106
+msgid "Order posts by:"
+msgstr "Ordenar entradas por:"
+
+#: views/admin.php:116
+msgid "Order:"
+msgstr "Orden:"
+
+#: views/admin.php:130
+msgid "Display thumbnails?"
+msgstr "¿Quieres mostrar las miniaturas?"
+
+#: views/admin.php:133
+msgid "Select a thumbnail size to show:"
+msgstr "Selecciona el tamaño de miniatura que se mostrará:"
+
+#: views/admin.php:146
+msgid "Template filename:"
+msgstr "Nombre del fichero de plantilla:"
+
+#: views/admin.php:149
+msgid "See documentation for details."
+msgstr "Consultar la documentación para los detalles"
+
+#: views/widget.php:39
+msgid "No post found"
+msgstr "No se ha encontrado ninguna entrada"
+
+#. Plugin Name of the plugin/theme
+msgid "Flexible Posts Widget"
+msgstr "Flexible Posts Widget"
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/flexible-posts-widget/"
+msgstr "http://wordpress.org/extend/plugins/flexible-posts-widget/"
+
+#. Description of the plugin/theme
+msgid ""
+"An advanced posts display widget with many options: get posts by post type "
+"and taxonomy & term or by post ID; sorting & ordering; feature images; "
+"custom templates and more."
+msgstr ""
+"Un widget avanzado para mostrar entradas, con muchas opciones: obtener "
+"entradas por tipo de contenido, taxonomía y términos; clasificación y "
+"ordenación; imágenes destacadas; plantillas personalizadas, etc."
+
+#. Author of the plugin/theme
+msgid "dpe415"
+msgstr "dpe415"
+
+#. Author URI of the plugin/theme
+msgid "http://dpedesign.com"
+msgstr "http://dpedesign.com"
+
+#~ msgid "for details."
+#~ msgstr "para saber más sobre la plantilla personalizada para el widget."

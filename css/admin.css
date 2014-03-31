@@ -1,0 +1,38 @@
+/*
+ * Flexible Posts Widget
+ * Admin Styles
+ * Author: dpe415
+ * URI: http://wordpress.org/extend/plugins/flexible-posts-widget/
+ */
+
+.cf:before,
+.cf:after	{content:" "; display:table;}
+.cf:after	{clear:both;}
+.cf			{*zoom:1;}
+
+.dpe-fp-widget h4		{margin-bottom:0.5em;}
+.dpe-fp-widget select	{background-color:#fff;}
+
+.dpe-fp-widget .ui-tabs-active		{background:#fff; border-color: #DFDFDF #DFDFDF #FFFFFF;}
+.dpe-fp-widget .ui-tabs-active a	{color:#333333;}
+
+.dpe-fp-widget .warning	{color:#d21703;}
+.dpe-fp-widget .section	{margin-bottom:1.33em; border-bottom:1px solid #dfdfdf;}
+.dpe-fp-widget .section.getemby	{padding-bottom:1.333em;}
+
+.dpe-fp-widget .tabs-panel.tt			{padding:1.333em 1em;}
+.dpe-fp-widget .tabs-panel.id			{padding:1.333em 1em 0;}
+.dpe-fp-widget .tabs-panel .terms		{max-height:110px; overflow:auto; border:1px solid #DFDFDF;}
+.dpe-fp-widget .tabs-panel .terms ul	{margin-left:1em;}
+.dpe-fp-widget .tabs-panel .terms p		{margin:1em;}
+
+.dpe-fp-widget .display p				{margin-bottom:0.5em;}
+.dpe-fp-widget .display p:last-child	{margin-bottom:1em;}
+.dpe-fp-widget .display label			{float:left; padding-top:0.4em;}
+.dpe-fp-widget .display input			{float:right; width:60px; text-align:right;}
+.dpe-fp-widget .display select			{float:right; width:120px;}
+
+.dpe-fp-widget .check input			{float:none; width:auto;}
+.dpe-fp-widget .check label			{float:none; padding-top:0.2em;}
+
+.dpe-fp-widget .description	{display:inline-block; padding-top:5px; font-size:80%;}
