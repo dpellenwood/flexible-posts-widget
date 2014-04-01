@@ -1,113 +1,165 @@
 <?php
-/*
-Plugin Name: Flexible Posts Widget
-Plugin URI: http://wordpress.org/extend/plugins/flexible-posts-widget/
-Version: 3.2.2
-Author: dpe415
-Author URI: http://dpedesign.com
-Text Domain: flexible-posts-widget
-Description: An advanced posts display widget with many options: get posts by post type and taxonomy & term or by post ID; sorting & ordering; feature images; custom templates and more.
-License: GPL2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-*/
+/**
+ * Flexible Posts Widget
+ *
+ * Display posts as widget items.
+ *
+ * @package   DPE_Flexible_Posts_Widget
+ * @author    David Paul Ellenwood <david@dpedesign.com>
+ * @license   GPL-2.0+
+ * @link      http://wordpress.org/extend/plugins/flexible-posts-widget
+ * @copyright 2013 David Paul Ellenwood
+ *
+ * @flexible-posts-widget
+ * Plugin Name:       Flexible Posts Widget
+ * Plugin URI:        http://wordpress.org/extend/plugins/flexible-posts-widget
+ * Description:       An advanced posts display widget with many options: get posts by post type and taxonomy & term or by post ID; sorting & ordering; feature images; custom templates and more.
+ * Version:           3.3
+ * Author:            dpe415
+ * Author URI:        http://dpedesign.com
+ * Text Domain:       flexible-posts-widget
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Domain Path:       /languages
+ * GitHub Plugin URI: https://github.com/dpellenwood/flexible-posts-widget
+ */
 
-/*  Copyright 2013  David Paul Ellenwood  (email : david@dpedesign.com)
+/**
+ * Copyright 2013  David Paul Ellenwood  (email : david@dpedesign.com)
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2, as 
+ * published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
-    published by the Free Software Foundation.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/ 
 
 // Block direct requests
-if( ! defined( 'ABSPATH' ) )
-	die( '-1' );
-
-// Define our version number
-if( ! defined( 'DPE_FP_Version' ) )
-	define( 'DPE_FP_Version', '3.2' );
-
-/**
- * Plugin Initialization
- * Used for internationalization only at this point
- */
-function dpe_flexible_posts_widget_init() {
-	load_plugin_textdomain( 'flexible-posts-widget', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
-add_action('plugins_loaded', 'dpe_flexible_posts_widget_init'); 
-
-
-/**
- * Initialize the widget on widgets_init
- */
-function dpe_load_flexible_posts_widget() {
-	register_widget( 'DPE_Flexible_Posts_Widget' );
-}
-add_action('widgets_init', 'dpe_load_flexible_posts_widget' );
 
 
 /**
  * Flexible Posts Widget Class
  */
 class DPE_Flexible_Posts_Widget extends WP_Widget {
-	
+
+    /**
+     * Unique identifier for your widget.
+     *
+     *
+     * The variable name is used as a unique identifier for the widget
+     *
+     * @since    1.0.0
+     *
+     * @var      string
+     */
+    protected $widget_slug = 'dpe_fp_widget';
+    
+    /**
+     * Unique identifier for your widget.
+     *
+     *
+     * The variable name is used as the text domain when internationalizing strings
+     * of text. Its value should match the Text Domain file header in the main
+     * widget file.
+     *
+     * @since    1.0.0
+     *
+     * @var      string
+     */
+    protected $widget_text_domain = 'flexible-posts-widget';
+
+
+	/*--------------------------------------------------*/
+	/* Constructor
+	/*--------------------------------------------------*/
+
 	/**
-	 * Register widget with WordPress.
+	 * Specifies the classname and description, instantiates the widget,
+	 * loads localization files, and includes necessary stylesheets and JavaScript.
 	 */
 	public function __construct() {
+	
+		// Define our version number
+		if( ! defined( 'DPE_FP_Version' ) )
+			define( 'DPE_FP_Version', '3.3' );
 		
-		global $pagenow;
-		
+		// load plugin text domain
+		add_action( 'init', array( $this, 'widget_textdomain' ) );
+
+		// The widget contrstructor
 		parent::__construct(
-	 		'dpe_fp_widget', // Base ID
-			'Flexible Posts Widget', // Name
-			array( 'description' => __( 'Display posts as widget items', 'flexible-posts-widget' ) ) // Args
+			$this->get_widget_slug(),
+			__( 'Flexible Posts Widget', $this->get_widget_text_domain() ),
+			array(
+				//'classname'   => $this->get_widget_slug(),
+				'description' => __( 'Display posts as widget items.', $this->get_widget_text_domain() ),
+			)
 		);
+
+		// Register admin styles and scripts
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
 		
-		$this->directory	= plugins_url( '/', __FILE__ );
-		
-		$this->register_hooks();					// Register actions & filters
-		$this->register_sns( $this->directory ); 	// Register styles & scripts
-		
-		// Enqueue admin scripts
-		if ( defined( 'WP_ADMIN' ) && WP_ADMIN ) {
-			wp_enqueue_script( 'flexible-posts-widget' );
-			wp_enqueue_style( 'flexible-posts-widget' );
-			wp_localize_script( 'flexible-posts-widget', 'objectL10n', array(
-				'gettingTerms' => __( 'Getting terms...', 'flexible-posts-widget' ),
-				'selectTerms' => __( 'Select terms:', 'flexible-posts-widget' ),
-				'noTermsFound' => __( 'No terms found.', 'flexible-posts-widget' ),
-			) );
-		}
+		// Setup our get terms/AJAX callback
+		add_action( 'wp_ajax_dpe_fp_get_terms', array( &$this, 'terms_checklist' ) );
 		
 	}
 	
+	/**
+	 * Return the widget slug.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return    Plugin slug variable.
+	 */
+	public function get_widget_slug() {
+		return $this->widget_slug;
+	}
 
-   /**
-	 * Front-end display of widget.
+	/**
+	 * Return the widget text domain.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return    Plugin text domain variable.
+	 */
+	public function get_widget_text_domain() {
+		return $this->widget_text_domain;
+	}
+
+
+	/*--------------------------------------------------*/
+	/* Widget API Functions
+	/*--------------------------------------------------*/
+	
+	/**
+	 * Outputs the content of the widget.
 	 *
 	 * @see WP_Widget::widget()
 	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
+	 * @param array args  The array of form elements
+	 * @param array instance The current instance of the widget
 	 */
-    function widget( $args, $instance ) {	
-        extract( $args );
+	public function widget( $args, $instance ) {
+				
+		extract( $args );
 		extract( $instance );
 				
 		$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
 		
 		if ( empty( $template ) )
 			$template = 'widget.php';
-		
 		
 		// Setup the query arguments array
 		$args = array();
@@ -172,7 +224,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 *
 	 * @return array Updated safe values to be saved.
 	 */
-    function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 		
 		// Get our defaults to test against
 		$this->posttypes	= get_post_types( array( 'public' => true ), 'objects' );
@@ -187,6 +239,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			'name'	 		=> __( 'Post Slug', 'flexible-posts-widget' ),
 			'comment_count'	=> __( 'Comment Count', 'flexible-posts-widget' ),
 			'rand'			=> __( 'Random', 'flexible-posts-widget' ),
+			'post__in'		=> __( 'Post ID Order', 'flexible-posts-widget' ),
 		);
 		$this->orders		= array(
 			'ASC'	=> __( 'Ascending', 'flexible-posts-widget' ),
@@ -262,9 +315,9 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 *
 	 * @param array $instance Previously saved values from database.
 	 */
-    function form( $instance ) {
-    	
-   		$this->posttypes	= get_post_types( array( 'public' => true ), 'objects' );
+	public function form( $instance ) {
+		
+		$this->posttypes	= get_post_types( array( 'public' => true ), 'objects' );
 		$this->taxonomies	= get_taxonomies( array( 'public' => true ), 'objects' );
 		$this->thumbsizes	= get_intermediate_image_sizes();
 		$this->orderbys		= array(
@@ -276,6 +329,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			'name'	 		=> __( 'Post Slug', 'flexible-posts-widget' ),
 			'comment_count'	=> __( 'Comment Count', 'flexible-posts-widget' ),
 			'rand'			=> __( 'Random', 'flexible-posts-widget' ),
+			'post__in'		=> __( 'Post ID Order', 'flexible-posts-widget' ),
 		);
 		$this->orders		= array(
 			'ASC'	=> __( 'Ascending', 'flexible-posts-widget' ),
@@ -302,8 +356,8 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		extract( $instance );
 		
 		include( $this->getTemplateHierarchy( 'admin' ) );
-        
-    }
+		
+	}
 
 	/**
 	 * Loads theme files in appropriate hierarchy: 1) child theme,
@@ -332,24 +386,64 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		return apply_filters( 'dpe_fpw_template_' . $template, $file );
 		
 	}
-	
+
+	/*--------------------------------------------------*/
+	/* Public Functions
+	/*--------------------------------------------------*/
+
 	/**
-	 * Register styles & scripts
+	 * Loads the Widget's text domain for localization and translation.
 	 */
-	public function register_sns( $dir ) {
-		wp_register_script( 'flexible-posts-widget', $dir . 'js/admin.js', array('jquery', 'jquery-ui-tabs' ), DPE_FP_Version, true );
-		wp_register_style( 'flexible-posts-widget', $dir . 'css/admin.css', array(), DPE_FP_Version );
-	}
-	
+	public function widget_textdomain() {
+
+		load_plugin_textdomain( $this->get_widget_slug(), false, plugin_dir_path( __FILE__ ) . 'languages/' );
+
+	} // end widget_textdomain
+
 	/**
-	 * Setup our get terms/AJAX callback
+	 * Registers and enqueues admin-specific styles.
 	 */
-	public function register_hooks() {
-		add_action( 'wp_ajax_dpe_fp_get_terms', array( &$this, 'terms_checklist' ) );
-	}
+	public function register_admin_styles() {
+
+		wp_enqueue_style(
+			$this->get_widget_slug() . '-admin',
+			plugins_url( 'css/admin.css', __FILE__ ),
+			array(),
+			DPE_FP_Version
+		);
+
+	} // end register_admin_styles
+
+	/**
+	 * Registers and enqueues admin-specific JavaScript.
+	 */
+	public function register_admin_scripts() {
+		
+		$source = 'js/admin.min.js';
+		
+		if( SCRIPT_DEBUG ) {
+			$source = 'js/admin.js';
+		}
+		
+		wp_enqueue_script(
+			$this->get_widget_slug() . '-admin',
+			plugins_url( $source, __FILE__ ),
+			array( 'jquery', 'jquery-ui-tabs' ),
+			DPE_FP_Version,
+			true
+		);
+		
+		wp_localize_script( $this->get_widget_slug() . '-admin', 'fpwL10n', array(
+			'gettingTerms' => __( 'Getting terms...', 'flexible-posts-widget' ),
+			'selectTerms' => __( 'Select terms:', 'flexible-posts-widget' ),
+			'noTermsFound' => __( 'No terms found.', 'flexible-posts-widget' ),
+		) );
+
+	} // end register_admin_scripts
+	
 	
 	/**
-	 * return a list of terms for the chosen taxonomy used via AJAX
+	 * Return a list of terms for the chosen taxonomy used via AJAX
 	 */
 	public function terms_checklist( $term ) {
 
@@ -386,7 +480,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	}
 	
 	/**
-     * 
+     * Return a list of post types via AJAX
      */
 	public function posttype_checklist( $posttype ) {
 		
@@ -405,3 +499,9 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	
 
 } // class DPE_Flexible_Posts_Widget
+
+
+/**
+ * Initialize the widget on widgets_init
+ */
+add_action( 'widgets_init', create_function( '', 'register_widget("DPE_Flexible_Posts_Widget");' ) );
