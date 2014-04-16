@@ -112,7 +112,7 @@ Edit the new file in your theme to your desired HTML layout. Please do not edit 
 * Refactored the PHP Class to encapsulate the plugin.
 * Added the ability to sort posts by "Post ID Order".  Useful when getting posts using the ID tab (`post__in`). (Props: @cinus89)
 * Added Russian translation. (Props: @mizhgun)
-* Tested To bump bump for WordPress 3.9 support.
+* Tested To bump for WordPress 3.9 support.
 
 = 3.2.2 =
 * Version bump for WordPress 3.8 support
