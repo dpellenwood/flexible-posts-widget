@@ -4,7 +4,7 @@
 **Tags:** widget, widgets, posts, categories, tags, recent posts, thumbnails, custom post types, custom taxonomies, feature image  
 **Requires at least:** 3.2  
 **Tested up to:** 3.9  
-**Stable tag:** 3.2.2  
+**Stable tag:** 3.3
 **License:** GPL2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
