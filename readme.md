@@ -3,8 +3,8 @@
 **Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DJKSKHJWYAWDU  
 **Tags:** widget, widgets, posts, categories, tags, recent posts, thumbnails, custom post types, custom taxonomies, feature image  
 **Requires at least:** 3.2  
-**Tested up to:** 3.9  
-**Stable tag:** 3.3
+**Tested up to:** 4.0  
+**Stable tag:** 3.3.1
 **License:** GPL2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -99,6 +99,10 @@ Edit the new file in your theme to your desired HTML layout. Please do not edit 
 
 
 ## Changelog ##
+
+### 3.3.1 ###
+* Added plugin icon.
+* Version bump for WordPress 4.0 support.
 
 ### 3.3 ###
 * Refactored the PHP Class to encapsulate the plugin.
