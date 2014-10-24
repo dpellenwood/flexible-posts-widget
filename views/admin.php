@@ -141,12 +141,33 @@ if ( !defined('ABSPATH') )
 		</p>
 	</div>
 	
-	<div class="section template">
+	<div class="section templates">
 		<p style="margin:1.33em 0;">
 			<label for="<?php echo $this->get_field_id('template'); ?>"><?php _e('Template filename:', 'flexible-posts-widget'); ?></label>
-			<input id="<?php echo $this->get_field_id('template'); ?>" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo $template; ?>" />
-			<br />
-			<span style="padding-top:3px;" class="description"><a target="_blank" href="http://wordpress.org/extend/plugins/flexible-posts-widget/other_notes/"><?php _e('See documentation for details.', 'flexible-posts-widget'); ?></a></span>
+			<?php 
+				if ( file_exists(get_stylesheet_directory() . '/flexible-posts-widget') and is_dir(get_stylesheet_directory() . '/flexible-posts-widget') ){
+					$template_dir = get_stylesheet_directory() . '/flexible-posts-widget';
+				}else{
+					$template_dir = dirname(__FILE__);
+				}
+				if (!$handle = opendir($template_dir)) {
+					echo "errore";
+				}
+			?>			
+			<select class="widefat" name="<?php echo $this->get_field_name('template'); ?>" id="<?php echo $this->get_field_id('template'); ?>">
+				<?php
+				$files=array();
+				while (false !== ($entry = readdir($handle))) {
+					if ($entry != 'admin.php' && $entry != '.' && $entry != '..' && is_file($template_dir.'/'.$entry) && !is_dir($template_dir.'/'.$entry) && is_readable($template_dir.'/'.$entry) ){
+						$files[] = $entry;
+					}
+				}
+				natcasesort($files);
+				foreach ($files as $entry){
+					echo '<option value="' . $entry . '" id="' . $this->get_field_id( $entry ) . '"', $template == $entry ? ' selected="selected"' : '', '>', str_replace('.php','',$entry), '</option>';
+				}
+				?>
+			</select>		
 		</p>
 	</div>
 	
