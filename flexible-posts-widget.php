@@ -151,7 +151,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 * @return    Plugin version variable.
 	 */
 	public function get_plugin_version() {
-		return $this->$plugin_version;
+		return $this->plugin_version;
 	}
 
 
