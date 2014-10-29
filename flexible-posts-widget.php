@@ -202,7 +202,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			
 			// Setup the query
 			$args['post__in']	= $pids;
-			$args['post_type']	= $this->posttypes;
+			$args['post_type']	= 'any';
 		
 		// Else get posts by post type and tax/term
 		} else { 
