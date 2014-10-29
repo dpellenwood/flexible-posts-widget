@@ -25,7 +25,7 @@
 <li>Control the number of posts displayed and the number of posts to offset.</li>
 <li>Option to display the post feature image.</li>
 <li>Select the post feature image size to display from existing image sizes: thumbnail, medium, large, post-thumbnail or any size defined by the current theme.</li>
-<li>Order posts by: date, ID, title, menu order, random, Post ID Order; and sort posts: ascending or descending.</li>
+<li>Order posts by: date, modified date, ID, title, menu order, random, Post ID Order; and sort posts: ascending or descending.</li>
 <li>Each widget&rsquo;s output can be customized by user-defined templates added to the current theme folder.</li>
 </ul>
 
@@ -56,7 +56,7 @@
 1. Copy <code>widget.php</code> from within the plugin&rsquo;s <code>views</code> folder into your theme&rsquo;s new <code>flexible-posts-widget</code> folder.
 1. Rename your theme&rsquo;s <code>widget.php</code> template file to a name of your choice. Example: <code>my-template.php</code>.
 1. Go to &lsquo;Appearance&rsquo; > &lsquo;Widgets&rsquo; in WordPress to configure an instance of the widget.
-1. In the &lsquo;Template Filename&rsquo; field choose the name of the template file you added to your theme. Example: <code>my-template</code></p>
+1. In the &lsquo;Template Filename&rsquo; field choose the name of the template file you added to your theme. Example: <code>My Template</code></p>
 
 <h2>Frequently Asked Questions</h2>
 
@@ -117,12 +117,31 @@ echo $test_field_value;</code></p>
 <h3>Future updates &amp; feature requests list</h3>
 
 <ul>
-<li>Dynamically populate the &ldquo;Template Filename&rdquo; field based on the templates available.</li>
-<li>Add shortcode functionality.</li>
+<li>Multilingual support (Polylang, WPML, etc.)</li>
+<li>Make Tax-Term drop-down hierarchical.</li>
+<li>Use search box instead of ID text field for post id&rsquo;s</li>
+<li>Shortcode functionality.</li>
+<li>Get posts by Author.</li>
+<li>Filter out the post currently being viewed.</li>
+<li>Get posts from the same archive (term/post type/etc).</li>
+<li>Limit results by a time period.</li>
 </ul>
 
 
 <h2>Changelog</h2>
+
+<h3>3.4</h3>
+
+<ul>
+<li>Added Finnish language support. (Props: @eccola)</li>
+<li>Made the Template Filename field a select box based on the templates available in the current theme, the parent theme (if the current theme is a child theme) and the plugin&rsquo;s views folder. (Props @w3b-beweb)</li>
+<li>Added a new default template (<code>Default.php</code>) that works better in most sidebar situations.  The current default template (<code>Widget.php</code>) will be used by any existing widgets unless manually changed.</li>
+<li>Added support to order posts by Modified Date.</li>
+<li>Migrated admin CSS to SASS.</li>
+<li>Much code clean up and refactoring.</li>
+<li>Fixed an issue with language files not loading properly (Props @sajtdavid).</li>
+</ul>
+
 
 <h3>3.3.1</h3>
 

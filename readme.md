@@ -21,7 +21,7 @@ Flexible Posts Widget (FPW) is more than just a simple alternative to the defaul
 * Control the number of posts displayed and the number of posts to offset.
 * Option to display the post feature image.
 * Select the post feature image size to display from existing image sizes: thumbnail, medium, large, post-thumbnail or any size defined by the current theme.
-* Order posts by: date, ID, title, menu order, random, Post ID Order; and sort posts: ascending or descending.
+* Order posts by: date, modified date, ID, title, menu order, random, Post ID Order; and sort posts: ascending or descending.
 * Each widget's output can be customized by user-defined templates added to the current theme folder.
 
 ### Supported Languages ###
@@ -43,7 +43,7 @@ Flexible Posts Widget (FPW) is more than just a simple alternative to the defaul
 1. Copy `widget.php` from within the plugin's `views` folder into your theme's new `flexible-posts-widget` folder.
 1. Rename your theme's `widget.php` template file to a name of your choice. Example: `my-template.php`.
 1. Go to 'Appearance' > 'Widgets' in WordPress to configure an instance of the widget.
-1. In the 'Template Filename' field choose the name of the template file you added to your theme. Example: `my-template`
+1. In the 'Template Filename' field choose the name of the template file you added to your theme. Example: `My Template`
 
 
 ## Frequently Asked Questions ##
@@ -95,11 +95,26 @@ FPW comes with a default template for the widget output. If you would like to al
 Edit the new file in your theme to your desired HTML layout. Please do not edit the one in the plugin folder as that will cause conflicts when you update the plugin to the latest release.
 
 ### Future updates & feature requests list ###
-* Dynamically populate the "Template Filename" field based on the templates available.
-* Add shortcode functionality.
+* Multilingual support (Polylang, WPML, etc.)
+* Make Tax-Term drop-down hierarchical.
+* Use search box instead of ID text field for post id's
+* Shortcode functionality.
+* Get posts by Author.
+* Filter out the post currently being viewed.
+* Get posts from the same archive (term/post type/etc).
+* Limit results by a time period.
 
 
 ## Changelog ##
+
+### 3.4 ###
+* Added Finnish language support. (Props: @eccola)
+* Made the Template Filename field a select box based on the templates available in the current theme, the parent theme (if the current theme is a child theme) and the plugin's views folder. (Props @w3b-beweb)
+* Added a new default template (`Default.php`) that works better in most sidebar situations.  The current default template (`Widget.php`) will be used by any existing widgets unless manually changed.
+* Added support to order posts by Modified Date.
+* Migrated admin CSS to SASS.
+* Much code clean up and refactoring.
+* Fixed an issue with language files not loading properly (Props @sajtdavid).
 
 ### 3.3.1 ###
 * Added plugin icon.
