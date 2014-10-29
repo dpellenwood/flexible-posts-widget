@@ -395,8 +395,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 * Loads the Widget's text domain for localization and translation.
 	 */
 	public function widget_textdomain() {
-
-		load_plugin_textdomain( $this->get_widget_slug(), false, plugin_dir_path( __FILE__ ) . 'languages/' );
+		load_plugin_textdomain( $this->get_widget_text_domain(), false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 	} // end widget_textdomain
 
