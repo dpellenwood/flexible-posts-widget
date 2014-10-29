@@ -1,6 +1,11 @@
 <?php
 /**
  * Flexible Posts Widget: Default widget template
+ * 
+ * @since 3.4.0
+ *
+ * This template was added to overcome some often-requested changes
+ * to the old default template (widget.php).
  */
 
 // Block direct requests
@@ -29,8 +34,8 @@ if( $flexible_posts->have_posts() ):
 						}
 					}
 				?>
+				<div class="title"><?php the_title(); ?></div>
 			</a>
-			<h4 class="title"><a href="<?php echo the_permalink(); ?>"><?php the_title(); ?></a></h4>
 		</li>
 	<?php endwhile; ?>
 	</ul><!-- .dpe-flexible-posts -->
