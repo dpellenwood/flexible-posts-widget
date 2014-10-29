@@ -78,6 +78,9 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
      * @var      string
      */
     protected $widget_text_domain = 'flexible-posts-widget';
+    
+    /**
+	 * Set the 
 
 
 	/*--------------------------------------------------*/
@@ -207,7 +210,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		$flexible_posts = new WP_Query( $args );
 		
 		// Get and include the template we're going to use
-		include( $this->getTemplateHierarchy( $template ) );
+		include( $this->get_template( $template ) );
 		
 		// Be sure to reset any post_data before proceeding
 		wp_reset_postdata();
@@ -231,19 +234,19 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		$this->taxonomies	= get_taxonomies( array( 'public' => true ), 'objects' );
 		$this->thumbsizes	= get_intermediate_image_sizes();
 		$this->orderbys		= array(
-			'date'		 	=> __( 'Publish Date', 'flexible-posts-widget' ),
-			'title'			=> __( 'Title', 'flexible-posts-widget' ),
-			'menu_order'	=> __( 'Menu Order', 'flexible-posts-widget' ),
-			'ID'			=> __( 'Post ID', 'flexible-posts-widget' ),
-			'author'		=> __( 'Author', 'flexible-posts-widget' ),
-			'name'	 		=> __( 'Post Slug', 'flexible-posts-widget' ),
-			'comment_count'	=> __( 'Comment Count', 'flexible-posts-widget' ),
-			'rand'			=> __( 'Random', 'flexible-posts-widget' ),
-			'post__in'		=> __( 'Post ID Order', 'flexible-posts-widget' ),
+			'date'		 	=> __( 'Publish Date', $this->get_widget_text_domain() ),
+			'title'			=> __( 'Title', $this->get_widget_text_domain() ),
+			'menu_order'	=> __( 'Menu Order', $this->get_widget_text_domain() ),
+			'ID'			=> __( 'Post ID', $this->get_widget_text_domain() ),
+			'author'		=> __( 'Author', $this->get_widget_text_domain() ),
+			'name'	 		=> __( 'Post Slug', $this->get_widget_text_domain() ),
+			'comment_count'	=> __( 'Comment Count', $this->get_widget_text_domain() ),
+			'rand'			=> __( 'Random', $this->get_widget_text_domain() ),
+			'post__in'		=> __( 'Post ID Order', $this->get_widget_text_domain() ),
 		);
 		$this->orders		= array(
-			'ASC'	=> __( 'Ascending', 'flexible-posts-widget' ),
-			'DESC'	=> __( 'Descending', 'flexible-posts-widget' ),
+			'ASC'	=> __( 'Ascending', $this->get_widget_text_domain() ),
+			'DESC'	=> __( 'Descending', $this->get_widget_text_domain() ),
 		);
 		
 		$pt_names		= get_post_types( array( 'public' => true ), 'names' );
@@ -321,19 +324,19 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		$this->taxonomies	= get_taxonomies( array( 'public' => true ), 'objects' );
 		$this->thumbsizes	= get_intermediate_image_sizes();
 		$this->orderbys		= array(
-			'date'		 	=> __( 'Publish Date', 'flexible-posts-widget' ),
-			'title'			=> __( 'Title', 'flexible-posts-widget' ),
-			'menu_order'	=> __( 'Menu Order', 'flexible-posts-widget' ),
-			'ID'			=> __( 'Post ID', 'flexible-posts-widget' ),
-			'author'		=> __( 'Author', 'flexible-posts-widget' ),
-			'name'	 		=> __( 'Post Slug', 'flexible-posts-widget' ),
-			'comment_count'	=> __( 'Comment Count', 'flexible-posts-widget' ),
-			'rand'			=> __( 'Random', 'flexible-posts-widget' ),
-			'post__in'		=> __( 'Post ID Order', 'flexible-posts-widget' ),
+			'date'		 	=> __( 'Publish Date', $this->get_widget_text_domain() ),
+			'title'			=> __( 'Title', $this->get_widget_text_domain() ),
+			'menu_order'	=> __( 'Menu Order', $this->get_widget_text_domain() ),
+			'ID'			=> __( 'Post ID', $this->get_widget_text_domain() ),
+			'author'		=> __( 'Author', $this->get_widget_text_domain() ),
+			'name'	 		=> __( 'Post Slug', $this->get_widget_text_domain() ),
+			'comment_count'	=> __( 'Comment Count', $this->get_widget_text_domain() ),
+			'rand'			=> __( 'Random', $this->get_widget_text_domain() ),
+			'post__in'		=> __( 'Post ID Order', $this->get_widget_text_domain() ),
 		);
 		$this->orders		= array(
-			'ASC'	=> __( 'Ascending', 'flexible-posts-widget' ),
-			'DESC'	=> __( 'Descending', 'flexible-posts-widget' ),
+			'ASC'	=> __( 'Ascending', $this->get_widget_text_domain() ),
+			'DESC'	=> __( 'Descending', $this->get_widget_text_domain() ),
 		);
 		
 		$instance = wp_parse_args( (array) $instance, array(
@@ -355,14 +358,15 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		
 		extract( $instance );
 		
-		include( $this->getTemplateHierarchy( 'admin' ) );
+		include( $this->get_template( 'admin' ) );
 		
 	}
 
 	/**
-	 * Loads theme files in appropriate hierarchy: 1) child theme,
-	 * 2) parent template, 3) plugin resources. will look in the flexible-posts-widget/
-	 * directory in a theme and the views/ directory in the plugin
+	 * Loads theme files in appropriate hierarchy:
+	 * 1. child theme 2. parent theme 3. plugin resources.
+	 * Will look in the flexible-posts-widget/ directory in a theme
+	 * and the views/ directory in the plugin
 	 *
 	 * Based on a function in the amazing image-widget
 	 * by Matt Wiebe at Modern Tribe, Inc.
@@ -371,17 +375,19 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 * @param string $template template file to search for
 	 * @return template path
 	 **/
-	public function getTemplateHierarchy( $template ) {
+	public function get_template( $template ) {
 		
 		// whether or not .php was added
 		$template_slug = preg_replace( '/.php$/', '', $template );
 		$template = $template_slug . '.php';
+		
+		// Set to the default
+		$file = 'views/' . $template;
 
-		if ( $theme_file = locate_template( array( 'flexible-posts-widget/' . $template ) ) ) {
+		// Look for a custom version
+		if ( $theme_file = locate_template( array( $this->get_widget_text_domain() . '/' . $template ) ) ) {
 			$file = $theme_file;
-		} else {
-			$file = 'views/' . $template;
-		}		
+		}
 		
 		return apply_filters( 'dpe_fpw_template_' . $template, $file );
 		
@@ -395,8 +401,9 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 * Loads the Widget's text domain for localization and translation.
 	 */
 	public function widget_textdomain() {
+		
 		load_plugin_textdomain( $this->get_widget_text_domain(), false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-
+		
 	} // end widget_textdomain
 
 	/**
@@ -433,9 +440,9 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		);
 		
 		wp_localize_script( $this->get_widget_slug() . '-admin', 'fpwL10n', array(
-			'gettingTerms' => __( 'Getting terms...', 'flexible-posts-widget' ),
-			'selectTerms' => __( 'Select terms:', 'flexible-posts-widget' ),
-			'noTermsFound' => __( 'No terms found.', 'flexible-posts-widget' ),
+			'gettingTerms' => __( 'Getting terms...', $this->get_widget_text_domain() ),
+			'selectTerms' => __( 'Select terms:', $this->get_widget_text_domain() ),
+			'noTermsFound' => __( 'No terms found.', $this->get_widget_text_domain() ),
 		) );
 
 	} // end register_admin_scripts
@@ -463,7 +470,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		$terms = get_terms( $taxonomy, $args );
 		
 		if( empty($terms) ) { 
-			$output = '<p>' . __( 'No terms found.', 'flexible-posts-widget' ) . '</p>';
+			$output = '<p>' . __( 'No terms found.', $this->get_widget_text_domain() ) . '</p>';
 		} else {
 			$output = '<ul class="categorychecklist termschecklist form-no-clear">';
 			foreach ( $terms as $option ) {
