@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Flexible Posts Widget package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flexible Posts Widget 3.3.1\n"
+"Project-Id-Version: Flexible Posts Widget 3.4\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/flexible-posts-widget\n"
-"POT-Creation-Date: 2014-10-29 19:48:12+00:00\n"
+"POT-Creation-Date: 2014-10-29 20:24:59+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#. #-#-#-#-#  plugin.pot (Flexible Posts Widget 3.3.1)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Flexible Posts Widget 3.4)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: flexible-posts-widget.php:122
 msgid "Flexible Posts Widget"
@@ -40,42 +40,46 @@ msgid "Publish Date"
 msgstr ""
 
 #: flexible-posts-widget.php:512
-msgid "Title"
+msgid "Modified Date"
 msgstr ""
 
 #: flexible-posts-widget.php:513
+msgid "Title"
+msgstr ""
+
+#: flexible-posts-widget.php:514
 msgid "Menu Order"
 msgstr ""
 
-#: flexible-posts-widget.php:514 views/admin.php:31
+#: flexible-posts-widget.php:515 views/admin.php:31
 msgid "Post ID"
 msgstr ""
 
-#: flexible-posts-widget.php:515
+#: flexible-posts-widget.php:516
 msgid "Author"
 msgstr ""
 
-#: flexible-posts-widget.php:516
+#: flexible-posts-widget.php:517
 msgid "Post Slug"
 msgstr ""
 
-#: flexible-posts-widget.php:517
+#: flexible-posts-widget.php:518
 msgid "Comment Count"
 msgstr ""
 
-#: flexible-posts-widget.php:518
+#: flexible-posts-widget.php:519
 msgid "Random"
 msgstr ""
 
-#: flexible-posts-widget.php:519
+#: flexible-posts-widget.php:520
 msgid "Post ID Order"
 msgstr ""
 
-#: flexible-posts-widget.php:524
+#: flexible-posts-widget.php:525
 msgid "Ascending"
 msgstr ""
 
-#: flexible-posts-widget.php:525
+#: flexible-posts-widget.php:526
 msgid "Descending"
 msgstr ""
 
