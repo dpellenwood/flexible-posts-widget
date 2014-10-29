@@ -54,8 +54,18 @@ if ( ! defined( 'WPINC' ) ) {
 class DPE_Flexible_Posts_Widget extends WP_Widget {
 
     /**
-     * Unique identifier for your widget.
+     * Plugin version number
      *
+     * The variable name is used as a unique identifier for the widget
+     *
+     * @since    3.3.1
+     *
+     * @var      string
+     */
+    protected $plugin_version = '3.3.1';
+
+    /**
+     * Unique identifier for your widget.
      *
      * The variable name is used as a unique identifier for the widget
      *
@@ -68,7 +78,6 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
     /**
      * Unique identifier for your widget.
      *
-     *
      * The variable name is used as the text domain when internationalizing strings
      * of text. Its value should match the Text Domain file header in the main
      * widget file.
@@ -78,9 +87,6 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
      * @var      string
      */
     protected $widget_text_domain = 'flexible-posts-widget';
-    
-    /**
-	 * Set the 
 
 
 	/*--------------------------------------------------*/
@@ -92,10 +98,6 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 * loads localization files, and includes necessary stylesheets and JavaScript.
 	 */
 	public function __construct() {
-	
-		// Define our version number
-		if( ! defined( 'DPE_FP_Version' ) )
-			define( 'DPE_FP_Version', '3.3' );
 		
 		// load plugin text domain
 		add_action( 'init', array( $this, 'widget_textdomain' ) );
@@ -139,6 +141,17 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 */
 	public function get_widget_text_domain() {
 		return $this->widget_text_domain;
+	}
+	
+	/**
+	 * Return the plugin version.
+	 *
+	 * @since    3.3.1
+	 *
+	 * @return    Plugin version variable.
+	 */
+	public function get_plugin_version() {
+		return $this->$plugin_version;
 	}
 
 
@@ -415,7 +428,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			$this->get_widget_slug() . '-admin',
 			plugins_url( 'css/admin.css', __FILE__ ),
 			array(),
-			DPE_FP_Version
+			$this->get_plugin_version()
 		);
 
 	} // end register_admin_styles
@@ -435,7 +448,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			$this->get_widget_slug() . '-admin',
 			plugins_url( $source, __FILE__ ),
 			array( 'jquery', 'jquery-ui-tabs' ),
-			DPE_FP_Version,
+			$this->get_plugin_version(),
 			true
 		);
 		
