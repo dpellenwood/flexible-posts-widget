@@ -142,29 +142,14 @@ if ( !defined( 'ABSPATH' ) )
 	</div>
 	
 	<div class="section templates">
-		<p style="margin:1.33em 0;">
+		<p>
 			<label for="<?php echo $this->get_field_id( 'template' ); ?>"><?php _e( 'Template filename:', $this->get_widget_text_domain() ); ?></label>
 			<?php 
-				if ( file_exists(get_stylesheet_directory() . '/flexible-posts-widget' ) and is_dir(get_stylesheet_directory() . '/flexible-posts-widget' ) ){
-					$template_dir = get_stylesheet_directory() . '/flexible-posts-widget';
-				}else{
-					$template_dir = dirname(__FILE__);
-				}
-				if (!$handle = opendir($template_dir)) {
-					echo "errore";
-				}
-			?>			
+			?>
 			<select class="widefat" name="<?php echo $this->get_field_name( 'template' ); ?>" id="<?php echo $this->get_field_id( 'template' ); ?>">
 				<?php
-				$files=array();
-				while (false !== ($entry = readdir($handle))) {
-					if ($entry != 'admin.php' && $entry != '.' && $entry != '..' && is_file($template_dir.'/'.$entry) && !is_dir($template_dir.'/'.$entry) && is_readable($template_dir.'/'.$entry) ){
-						$files[] = $entry;
-					}
-				}
-				natcasesort($files);
-				foreach ($files as $entry){
-					echo '<option value="' . $entry . '" id="' . $this->get_field_id( $entry ) . '"', $template == $entry ? ' selected="selected"' : '', '>', str_replace( '.php','',$entry), '</option>';
+				foreach ($this->templates as $key => $value ) {
+					echo '<option value="' . $key . '" id="' . $this->get_field_id( $key ) . '"', $template == $key ? ' selected="selected"' : '', '>', ucwords( preg_replace( array( '/-/', '/_/' ), ' ', preg_replace( '/.php$/', '', $key ) ) ), '</option>';
 				}
 				?>
 			</select>		

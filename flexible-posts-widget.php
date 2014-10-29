@@ -100,6 +100,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	protected $thumbsizes = '';
 	protected $orderbys   = '';
 	protected $orders     = '';
+	protected $templates  = '';
 
 
 	/*--------------------------------------------------*/
@@ -198,11 +199,10 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		
 		// Get posts by post_ids specifically (ignore post type & tax/term values).
 		if ( !empty( $pids ) ) {
-		
+			
 			// Setup the query
 			$args['post__in']	= $pids;
 			$args['post_type']	= $this->posttypes;
-		
 		
 		// Else get posts by post type and tax/term
 		} else { 
@@ -294,7 +294,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			foreach ( $pids_array as $id ) {
 				$pids[] = absint( $id );
 			}
-		}
+		}		
 		
 		$instance 				= $old_instance;
 		$instance['title']		= strip_tags( $new_instance['title'] );
@@ -309,7 +309,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		$instance['sticky']		= ( isset(  $new_instance['sticky'] ) ? (int) $new_instance['sticky'] : '0' );
 		$instance['thumbnail']	= ( isset(  $new_instance['thumbnail'] ) ? (int) $new_instance['thumbnail'] : '0' );
 		$instance['thumbsize']	= ( in_array ( $new_instance['thumbsize'], $this->thumbsizes ) ? $new_instance['thumbsize'] : '' );
-		$instance['template']	= strip_tags( $new_instance['template'] );
+		$instance['template']	= ( array_key_exists( $new_instance['template'], $this->templates ) ? $new_instance['template'] : 'widget.php' );
 		$instance['cur_tab']	= (int) $new_instance['cur_tab'];
         
         return $instance;
@@ -525,6 +525,104 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			'DESC'	=> __( 'Descending', $this->get_widget_text_domain() ),
 		);
 		
+		// Set the available templates
+		$this->templates = wp_cache_get( 'templates', $this->widget_slug );
+		
+		if( false === $this->templates ) {
+			$this->templates = (array) $this->get_files( 'php', 0, true );
+			wp_cache_set( 'templates', $this->templates, $this->widget_slug );
+		}
+		
+		
+	}
+
+	/**
+	 * Return template files from the current theme, parent theme and the plugin views directory.
+	 *
+	 * @since 3.3.1
+	 * @access public
+	 *
+	 * Based on the function of the same name in wp-includes/class-wp-theme.php
+	 *
+	 * @param mixed $type Optional. Array of extensions to return. Defaults to all files (null).
+	 * @param int $depth Optional. How deep to search for files. Defaults to a flat scan (0 depth). -1 depth is infinite.
+	 * @param bool $search_parent Optional. Whether to return parent files. Defaults to false.
+	 * @return array Array of files, keyed by the path to the file relative to the theme's directory, with the values
+	 * 	being absolute paths.
+	 */
+	public function get_files( $type = null, $depth = 0, $search_parent = false ) {
+		
+		$files = array();
+		$theme_dir = get_stylesheet_directory() . '/' . $this->get_widget_text_domain();
+		$plugin_dir = dirname(__FILE__) . '/views';
+		
+		// Check the current theme
+		if( is_dir( $theme_dir ) ) {
+			$files += (array) self::scandir( $theme_dir, $type, $depth );
+		}
+
+		// Check the parent theme
+		if ( $search_parent && is_child_theme() ) {
+			$parent_theme_dir = get_template_directory() . '/' . $this->get_widget_text_domain();
+			if( is_dir( $parent_theme_dir ) ) {
+				$files += (array) self::scandir( $parent_theme_dir, $type, $depth );
+			}
+		}
+		
+		// Check the plugin views folder
+		if( is_dir( $plugin_dir ) ) {
+			$files += (array) self::scandir( $plugin_dir, $type, $depth );
+			// Remove the admin view
+			unset( $files['admin.php'] );
+		}
+		
+		return $files;
+	}
+	
+	/**
+	 * Scans a directory for files of a certain extension.
+	 *
+	 * @since 3.3.1
+	 * @access private
+	 *
+	 * Based on the function of the same name in wp-includes/class-wp-theme.php
+	 *
+	 * @param string $path Absolute path to search.
+	 * @param mixed  Array of extensions to find, string of a single extension, or null for all extensions.
+	 * @param int $depth How deep to search for files. Optional, defaults to a flat scan (0 depth). -1 depth is infinite.
+	 * @param string $relative_path The basename of the absolute path. Used to control the returned path
+	 * 	for the found files, particularly when this function recurses to lower depths.
+	 */
+	private static function scandir( $path, $extensions = null, $depth = 0, $relative_path = '' ) {
+		if ( ! is_dir( $path ) )
+			return false;
+
+		if ( $extensions ) {
+			$extensions = (array) $extensions;
+			$_extensions = implode( '|', $extensions );
+		}
+
+		$relative_path = trailingslashit( $relative_path );
+		if ( '/' == $relative_path )
+			$relative_path = '';
+
+		$results = scandir( $path );
+		$files = array();
+
+		foreach ( $results as $result ) {
+			if ( '.' == $result[0] )
+				continue;
+			if ( is_dir( $path . '/' . $result ) ) {
+				if ( ! $depth || 'CVS' == $result )
+					continue;
+				$found = self::scandir( $path . '/' . $result, $extensions, $depth - 1 , $relative_path . $result );
+				$files = array_merge_recursive( $files, $found );
+			} elseif ( ! $extensions || preg_match( '~\.(' . $_extensions . ')$~', $result ) ) {
+				$files[ $relative_path . $result ] = $path . '/' . $result;
+			}
+		}
+
+		return $files;
 	}
 	
 
