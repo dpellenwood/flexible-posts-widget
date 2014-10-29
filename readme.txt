@@ -97,11 +97,6 @@ When upgrading from one major version to another (version 1.x to version 2.x to 
 = Upgrading from one major version to another =
 When upgrading between major releases (version 1.x to version 2.x to version 3.x, etc), please remember to verify your settings for any existing widgets.  Not all settings combinations will be saved after a major release upgrade.
 
-= Default vs. Custom Templates =
-FPW comes with a default template for the widget output. If you would like to alter the widget display code, create a new folder called `flexible-posts-widget` in your template directory and copy over the "views/widget.php" file.
-
-Edit the new file in your theme to your desired HTML layout. Please do not edit the one in the plugin folder as that will cause conflicts when you update the plugin to the latest release.
-
 = Future updates & feature requests list =
 * Multilingual support (Polylang, WPML, etc.)
 * Make Tax-Term drop-down hierarchical.
