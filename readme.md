@@ -26,6 +26,7 @@ Flexible Posts Widget (FPW) is more than just a simple alternative to the defaul
 
 ### Supported Languages ###
 * English
+* Finnish
 * Italian
 * Polish
 * Russian
@@ -37,12 +38,12 @@ Flexible Posts Widget (FPW) is more than just a simple alternative to the defaul
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 1. Go to 'Appearance' > 'Widgets' and place the widget into a sidebar to configure it.
 
-### To use a custom HTML output template ###
-1. Create a folder called `flexible-posts-widget` in the root of your theme folder.
+= To use a custom HTML output template =
+1. Create a folder called `flexible-posts-widget` in the root folder of the currently active theme.
 1. Copy `widget.php` from within the plugin's `views` folder into your theme's new `flexible-posts-widget` folder.
-1. Optional: Rename your theme's `widget.php` template file to a name of your choice (to use different templates for each widget instance).
+1. Rename your theme's `widget.php` template file to a name of your choice. Example: `my-template.php`.
 1. Go to 'Appearance' > 'Widgets' in WordPress to configure an instance of the widget.
-1. In the 'Template Filename' field enter the name of the template file you added to your theme. Example: `my-themes-widget.php`
+1. In the 'Template Filename' field choose the name of the template file you added to your theme. Example: `my-template`
 
 
 ## Frequently Asked Questions ##
