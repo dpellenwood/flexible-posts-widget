@@ -192,7 +192,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
 		
 		if ( empty( $template ) )
-			$template = 'widget.php';
+			$template = 'default.php';
 		
 		// Setup the query arguments array
 		$args = array();
@@ -309,7 +309,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		$instance['sticky']		= ( isset(  $new_instance['sticky'] ) ? (int) $new_instance['sticky'] : '0' );
 		$instance['thumbnail']	= ( isset(  $new_instance['thumbnail'] ) ? (int) $new_instance['thumbnail'] : '0' );
 		$instance['thumbsize']	= ( in_array ( $new_instance['thumbsize'], $this->thumbsizes ) ? $new_instance['thumbsize'] : '' );
-		$instance['template']	= ( array_key_exists( $new_instance['template'], $this->templates ) ? $new_instance['template'] : 'widget.php' );
+		$instance['template']	= ( array_key_exists( $new_instance['template'], $this->templates ) ? $new_instance['template'] : 'default.php' );
 		$instance['cur_tab']	= (int) $new_instance['cur_tab'];
         
         return $instance;
@@ -338,7 +338,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			'sticky'	=> '0',
 			'thumbnail' => '0',
 			'thumbsize' => '',
-			'template'	=> 'widget.php',
+			'template'	=> 'default.php',
 			'cur_tab'	=> '0',
 		) );
 		
