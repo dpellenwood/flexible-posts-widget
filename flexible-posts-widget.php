@@ -93,14 +93,14 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
      *
      * @since    3.3.1
 	 */
-	protected $posttypes  = '';
-	protected $pt_names   = '';
-	protected $taxonomies = '';
-	protected $tax_names  = '';
-	protected $thumbsizes = '';
-	protected $orderbys   = '';
-	protected $orders     = '';
-	protected $templates  = '';
+	protected $posttypes  = array();
+	protected $pt_names   = array();
+	protected $taxonomies = array();
+	protected $tax_names  = array();
+	protected $thumbsizes = array();
+	protected $orderbys   = array();
+	protected $orders     = array();
+	protected $templates  = array();
 
 
 	/*--------------------------------------------------*/
