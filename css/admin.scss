@@ -30,11 +30,13 @@
 	}
 
 	.tabs-panel {
-		&.tt {padding:1.333em 1em;}
-		&.id {padding:1.333em 1em 0;}
+		&.tt {
+			padding:0 1em 1.333em 1em;
+		}
+		&.id {padding:0 1em;}
 		.terms {
-			max-height:110px; overflow:auto; border:1px solid #DFDFDF;
-			ul	{margin-left:1em;}
+			max-height:100px; overflow:auto; border:1px solid #DFDFDF;
+			ul	{margin:0.5em 1em;}
 			p	{margin:1em;}
 		}
 	}
