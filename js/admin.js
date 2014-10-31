@@ -72,9 +72,10 @@ jQuery('#widgets-right').on('change', 'select.dpe-fp-taxonomy', function() {
 		});
 		
 		data = {
-			action:		'dpe_fp_get_terms',
-			taxonomy:	jQuery(this).val(),
-			term:		selected_terms
+			action:    'dpe_fp_get_terms',
+			taxonomy:  jQuery(this).val(),
+			term:      selected_terms,
+			fpwNounce: fpwL10n.fpwNounce
 		};
 		
 		jQuery.post(ajaxurl, data, function(response) {

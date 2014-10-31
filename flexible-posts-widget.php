@@ -185,7 +185,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 * @param array instance The current instance of the widget
 	 */
 	public function widget( $args, $instance ) {
-				
+		
 		extract( $args );
 		extract( $instance );
 				
@@ -195,24 +195,24 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			$template = 'default.php';
 		
 		// Setup the query arguments array
-		$args = array();
+		$query_args = array();
 		
 		// Get posts by post_ids specifically (ignore post type & tax/term values).
 		if ( !empty( $pids ) ) {
 			
 			// Setup the query
-			$args['post__in']	= $pids;
-			$args['post_type']	= 'any';
+			$query_args['post__in']	 = $pids;
+			$query_args['post_type'] = 'any';
 		
 		// Else get posts by post type and tax/term
 		} else { 
 		
 			// Setup the post types
-			$args['post_type'] = $posttype;
+			$query_args['post_type'] = $posttype;
 			
 			// Setup the tax & term query based on the user's selection
 			if ( $taxonomy != 'none' && !empty( $term ) ) {
-				$args['tax_query'] = array(
+				$query_args['tax_query'] = array(
 					array(
 						'taxonomy'	=> $taxonomy,
 						'field'		=> 'slug',
@@ -224,19 +224,18 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		}
 		
 		// Finish the query
-		$args['post_status']			= array( 'publish', 'inherit' );
-		$args['posts_per_page']			= $number;
-		$args['offset']					= $offset;
-		$args['orderby']				= $orderby;
-		$args['order']					= $order;
-		$args['ignore_sticky_posts']	= $sticky;
-		
+		$query_args['post_status']          = array( 'publish', 'inherit' );
+		$query_args['posts_per_page']       = $number;
+		$query_args['offset']               = $offset;
+		$query_args['orderby']              = $orderby;
+		$query_args['order']                = $order;
+		$query_args['ignore_sticky_posts']  = $sticky;
 		
 		// Allow filtering of the query arguments
-		$args = apply_filters( 'dpe_fpw_args', $args );
+		$query_args = apply_filters( 'dpe_fpw_args', $query_args );
 		
 		// Get the posts for this instance
-		$flexible_posts = new WP_Query( $args );
+		$flexible_posts = new WP_Query( $query_args );
 		
 		// Get and include the template we're going to use
 		include( $this->get_template( $template ) );
@@ -425,8 +424,9 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 		
 		wp_localize_script( $this->get_widget_slug() . '-admin', 'fpwL10n', array(
 			'gettingTerms' => __( 'Getting terms...', $this->get_widget_text_domain() ),
-			'selectTerms' => __( 'Select terms:', $this->get_widget_text_domain() ),
+			'selectTerms'  => __( 'Select terms:', $this->get_widget_text_domain() ),
 			'noTermsFound' => __( 'No terms found.', $this->get_widget_text_domain() ),
+			'fpwNounce'    => wp_create_nonce( 'fpw-terms-nonce' )
 		) );
 
 	} // end register_admin_scripts
@@ -435,8 +435,14 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	/**
 	 * Return a list of terms for the chosen taxonomy used via AJAX
 	 */
-	public function terms_checklist( $term ) {
-
+	public function terms_checklist( $term = null, $taxonomy = null ) {
+		
+		// check nonce
+		$nonce = $_POST['fpwNounce']; 	
+		if ( ! wp_verify_nonce( $nonce, 'fpw-terms-nonce' ) ) {
+			die ( 'Bad Nounce');
+		}
+		
 		$taxonomy = esc_attr( $_POST['taxonomy'] );
 
 		if ( ! isset( $term ) )
@@ -470,7 +476,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	}
 	
 	/**
-     * Return a list of post types via AJAX
+     * Return a list of post types
      */
 	public function posttype_checklist( $posttype ) {
 
