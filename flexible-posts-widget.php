@@ -342,8 +342,6 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			'cur_tab'	=> '0',
 		) );
 		
-		extract( $instance );
-		
 		include( $this->get_template( 'admin' ) );
 		
 	}
