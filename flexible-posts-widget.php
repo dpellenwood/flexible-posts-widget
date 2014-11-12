@@ -2,30 +2,29 @@
 /**
  * Flexible Posts Widget
  *
- * Display posts as widget items.
+ * A collection of widgets to display posts based on different criteria
  *
- * @package   DPE_Flexible_Posts_Widget
- * @author    David Paul Ellenwood <david@dpedesign.com>
- * @license   GPL-2.0+
- * @link      http://wordpress.org/extend/plugins/flexible-posts-widget
- * @copyright 2013 David Paul Ellenwood
+ * @package           DPE_Flexible_Posts_Widget
+ * @author            DPE WS&D LLC <fpw@dpedesign.com>
+ * @license           GPL-2.0+
+ * @link              http://flexiblepostswidget.com
+ * @copyright         2013 DPE WS&D LLC
  *
  * @flexible-posts-widget
  * Plugin Name:       Flexible Posts Widget
- * Plugin URI:        http://wordpress.org/extend/plugins/flexible-posts-widget
+ * Plugin URI:        http://flexiblepostswidget.com 
  * Description:       An advanced posts display widget with many options: get posts by post type and taxonomy & term or by post ID; sorting & ordering; feature images; custom templates and more.
  * Version:           3.4
  * Author:            dpe415
  * Author URI:        http://dpedesign.com
- * Text Domain:       flexible-posts-widget
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       flexible-posts-widget
  * Domain Path:       /languages
- * GitHub Plugin URI: https://github.com/dpellenwood/flexible-posts-widget
  */
 
 /**
- * Copyright 2013  David Paul Ellenwood  (email : david@dpedesign.com)
+ * Copyright 2013 DPE WS&D LLC
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as 
@@ -41,8 +40,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-
-// Block direct requests
+// If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
