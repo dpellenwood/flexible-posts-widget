@@ -36,8 +36,8 @@
 		&.id {padding:0 1em;}
 		.terms {
 			max-height:100px; overflow:auto; border:1px solid #DFDFDF;
-			ul	{margin:0.5em 1em;}
-			p	{margin:1em;}
+			> ul	{margin:0.5em 1em;}
+			p		{margin:1em;}
 		}
 	}
 	
