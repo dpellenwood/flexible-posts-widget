@@ -255,43 +255,66 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		
-		// Validate posttype submissions
 		$posttypes = array();
-		foreach( $new_instance['posttype'] as $pt ) {
-			if( in_array( $pt, $this->pt_names ) )
+		$terms     = array();
+		$taxonomy  = 'none';
+		$pids      = array();
+		
+		// Validate posttype
+		foreach ( $new_instance['posttype'] as $pt ) {
+			if ( in_array( $pt, $this->pt_names ) ) {
 				$posttypes[] = $pt;
-		}
-		if( empty( $posttypes ) )
-			$posttypes[] = 'post';
-		
-		// Validate taxonomy & term submissions 
-		if( in_array( $new_instance['taxonomy'], $this->tax_names ) ) {
-			$taxonomy	= $new_instance['taxonomy'];
-			$terms		= array();
-			if( 'none' != $taxonomy ) {
-				$term_objects = get_terms( $taxonomy, array( 'hide_empty' => false ) );
-				$term_names = array();
-				foreach ( $term_objects as $object ) {
-					$term_names[] = $object->slug;
-				}
-				foreach( $new_instance['term'] as $term ) {
-					if( in_array( $term, $term_names ) )
-						$terms[] = $term;
-				}
 			}
-		} else {
-			$taxonomy = 'none';
-			$terms = array();
+		}
+		if ( empty( $posttypes ) ) {
+			$posttypes[] = 'post';
 		}
 		
-		// Validate Post ID submissions 
-		$pids = array();
-		if( !empty( $new_instance['pids'] ) ) {
+		// Validate taxonomy 
+		if ( taxonomy_exists( $new_instance['taxonomy'] ) ) {
+			$taxonomy = $new_instance['taxonomy'];
+			
+			/**
+			 * Validate terms
+			 * We have to work around the fact that the walker class for wp_terms_checklist()
+			 * uses (DIFFERENT!!!) hard-coded HTML input names instead of allowing us to set
+			 * a widget-instance-specific input name.
+			 */
+			if ( isset( $_REQUEST['widget-id'] ) && $_REQUEST['widget-id'] == $this->id ) {
+
+				$posted_terms = array();
+
+				/**
+				 * If the posted terms are from the built-in Post Category taxonomy
+				 * We have to use one $_POST variable and a different, variable
+				 * $_POST variable for every other taxonomy.
+				 */
+				if( isset( $_POST['post_category'] ) ) {
+					$posted_terms = $_POST['post_category'];
+				} else {
+					if ( isset( $_POST['tax_input'][$taxonomy] ) ) {
+						$posted_terms = $_POST['tax_input'][$taxonomy];
+					}
+				}
+
+				// Once we actually have the $_POSTed terms, validate and and save them
+				foreach ( $posted_terms as $term ) {
+					if( term_exists( absint( $term ), $taxonomy ) ) {
+						$terms[] = absint( $term );
+					}
+				}
+
+			}
+			
+		}
+		
+		// Validate Post ID submissions
+		if ( !empty( $new_instance['pids'] ) ) {
 			$pids_array = explode( ',', $new_instance['pids'] );
 			foreach ( $pids_array as $id ) {
 				$pids[] = absint( $id );
 			}
-		}		
+		}
 		
 		$instance 				= $old_instance;
 		$instance['title']		= strip_tags( $new_instance['title'] );
