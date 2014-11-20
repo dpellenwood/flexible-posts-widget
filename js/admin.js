@@ -62,7 +62,7 @@ jQuery('#widgets-right').on('change', 'select.dpe-fp-taxonomy', function() {
 		terms_label		= jQuery(this).parent().next('label'),
 		widget_id       = jQuery(this).parents('form').find('input.widget_number'),
 		data            = {};
-	
+
 	// If we're not ignoring Taxonomy & Term...
 	if( jQuery(this).val() !== 'none' ) {
 		
