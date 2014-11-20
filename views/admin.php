@@ -49,28 +49,7 @@ if ( !defined( 'ABSPATH' ) )
 					</p>
 					<label <?php echo 'none' == $instance['taxonomy'] ? ' style="display:none;"' : ''; ?>><?php _e( 'Select terms:', $this->get_widget_text_domain() ); ?></label> 
 					<div class="terms" <?php echo 'none' == $instance['taxonomy'] ? ' style="display:none;"' : ''; ?>>
-						<?php
-							if ( !empty( $instance['taxonomy'] ) && 'none' != $instance['taxonomy'] ) {
-							
-								$args = array (
-									'hide_empty' => 0,
-								);
-								
-								$terms = get_terms( $instance['taxonomy'], $args );
-								
-								if( ! empty( $terms ) ) {
-									$output = '<ul class="categorychecklist termschecklist form-no-clear">';
-									foreach ( $terms as $option ) {
-										$output .= "\n<li>" . '<label class="selectit"><input value="' . esc_attr( $option->slug ) . '" type="checkbox" name="' . $this->get_field_name( 'term' ) . '[]"' . checked( in_array( $option->slug, (array)$instance['term'] ), true, false ) . ' /> ' . esc_html( $option->name ) . "</label></li>\n";
-									}
-									$output .= "</ul>\n";
-								} else {
-									$output = '<p>' . __( 'No terms found.', $this->get_widget_text_domain() ) . '</p>';
-								}
-								
-								echo ( $output );
-							}
-						?>
+						<?php $this->terms_checklist( $instance['taxonomy'], $instance['term'] ); ?>
 					</div>
 				</div><!-- .tt.getemby -->
 				

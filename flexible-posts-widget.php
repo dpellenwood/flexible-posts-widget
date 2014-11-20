@@ -447,52 +447,62 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 			'gettingTerms' => __( 'Getting terms...', $this->get_widget_text_domain() ),
 			'selectTerms'  => __( 'Select terms:', $this->get_widget_text_domain() ),
 			'noTermsFound' => __( 'No terms found.', $this->get_widget_text_domain() ),
-			'fpwNounce'    => wp_create_nonce( 'fpw-terms-nonce' )
 		) );
 
 	} // end register_admin_scripts
 	
 	
 	/**
-	 * Return a list of terms for the chosen taxonomy used via AJAX
+	 * Return a list of terms for the chosen taxonomy
 	 */
-	public function terms_checklist( $term = null, $taxonomy = null ) {
-		
-		// check nonce
-		$nonce = $_POST['fpwNounce']; 	
-		if ( ! wp_verify_nonce( $nonce, 'fpw-terms-nonce' ) ) {
-			die ( 'Bad Nounce');
-		}
-		
-		$taxonomy = esc_attr( $_POST['taxonomy'] );
+	public function terms_checklist( $taxonomy, $sel_terms = array() ) {
 
-		if ( ! isset( $term ) )
-			$term = esc_attr( $_POST['term'] );
-		
+		if ( empty( $taxonomy ) && isset( $_POST['taxonomy'] ) )
+			$taxonomy = esc_attr( $_POST['taxonomy'] );
+
 		if ( empty( $taxonomy ) || 'none' == $taxonomy ) {
 			echo false;
+			if( isset ( $_POST['action'] )  && 'dpe_fp_get_terms' === $_POST['action'] ) {
+				die();
+			}
+		}
+
+		if( isset ( $_POST['widget_id'] ) ) {
+			$widget_id = intval( $_POST['widget_id'] );
+		} else {
+			$widget_id = $this->number;
+		}
+
+		if( empty ( $sel_terms ) ) {
+			$settings = get_option( $this->option_name );
+			if( isset ( $settings[$widget_id]['taxonomy'] ) && $taxonomy == $settings[$widget_id]['taxonomy'] ) {
+				$sel_terms = $settings[$widget_id]['term'];
+			}
+		}
+
+		$args = array (
+			'taxonomy'      => $taxonomy,
+			'selected_cats' => $sel_terms,
+		);
+
+		ob_start();
+		wp_terms_checklist( 0, $args );
+		$terms_html = ob_get_contents();
+		ob_end_clean();
+
+		if( ! empty( $terms_html ) ) {
+			$output = '<ul class="categorychecklist termschecklist form-no-clear">';
+			$output .= $terms_html;
+			$output .= "</ul>\n";
+		} else {
+			$output = '<p>' . __( 'No terms found.', $this->get_widget_text_domain() ) . '</p>';
+		}
+
+		echo ( $output );
+
+		if( isset ( $_POST['action'] )  && 'dpe_fp_get_terms' === $_POST['action'] ) {
 			die();
 		}
-		
-		$args = array (
-			'hide_empty' => 0,
-		);
-		
-		$terms = get_terms( $taxonomy, $args );
-		
-		if( empty($terms) ) { 
-			$output = '<p>' . __( 'No terms found.', $this->get_widget_text_domain() ) . '</p>';
-		} else {
-			$output = '<ul class="categorychecklist termschecklist form-no-clear">';
-			foreach ( $terms as $option ) {
-				$output .= "\n<li>" . '<label class="selectit"><input value="' . esc_attr( $option->slug ) . '" type="checkbox" name="' . $this->get_field_name('term') . '[]"' . checked( in_array( $option->slug, (array)$term ), true, false ) . ' /> ' . esc_html( $option->name ) . "</label></li>\n";
-			}
-			$output .= "</ul>\n";
-		}
-		
-		echo ( $output );
-		
-		die();
 		
 	}
 	
