@@ -3,8 +3,8 @@ Contributors: dpe415
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DJKSKHJWYAWDU
 Tags: widget, widgets, posts, categories, tags, recent posts, thumbnails, custom post types, custom taxonomies, feature image
 Requires at least: 3.2
-Tested up to: 4.0
-Stable tag: 3.4
+Tested up to: 4.1
+Stable tag: 3.4.1
 License: GPL2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,7 +32,6 @@ Flexible Posts Widget (FPW) is more than just a simple alternative to the defaul
 * Russian
 * Spanish
 
-
 == Installation ==
 1. Upload the `flexible-posts-widget` folder to the `/wp-content/plugins/` directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
@@ -44,7 +43,6 @@ Flexible Posts Widget (FPW) is more than just a simple alternative to the defaul
 1. Rename your theme's `widget.php` template file to a name of your choice. Example: `my-template.php`.
 1. Go to 'Appearance' > 'Widgets' in WordPress to configure an instance of the widget.
 1. In the 'Template Filename' field choose the name of the template file you added to your theme. Example: `My Template`
-
 
 == Frequently Asked Questions ==
 
@@ -79,7 +77,6 @@ I'd love to support more languages.  The plugin's POT file is available with the
 = Questions, Support & Bug Reports =
 To get answers to your questions, request help or submit a bug report, please start a [new forum thread](http://wordpress.org/tags/flexible-posts-widget/).
 
-
 == Screenshots ==
 1. Configuring a FPW in wp-admin with the Post Type tab displayed.
 1. Configuring a FPW in wp-admin with the Taxonomy & Term tab displayed.
@@ -91,7 +88,6 @@ To get answers to your questions, request help or submit a bug report, please st
 
 == Upgrade Notice ==
 When upgrading from one major version to another (version 1.x to version 2.x to version 3.x, etc), please remember to verify your settings for any existing widgets.  Not all settings combinations will be saved after a major release upgrade.
-
 
 == Other Notes ==
 = Upgrading from one major version to another =
@@ -109,6 +105,9 @@ When upgrading between major releases (version 1.x to version 2.x to version 3.x
 
 
 == Changelog ==
+
+= 3.4.1 =
+* Version bump for WordPress 4.1 support.
 
 = 3.4 =
 * Added Finnish language support. (Props: @eccola)
