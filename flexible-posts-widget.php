@@ -14,7 +14,7 @@
  * Plugin Name:       Flexible Posts Widget
  * Plugin URI:        http://flexiblepostswidget.com 
  * Description:       An advanced posts display widget with many options: get posts by post type and taxonomy & term or by post ID; sorting & ordering; feature images; custom templates and more.
- * Version:           3.4.1-beta
+ * Version:           3.5-dev
  * Author:            dpe415
  * Author URI:        http://dpedesign.com
  * License:           GPL-2.0+
@@ -60,7 +60,7 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
      *
      * @var      string
      */
-    protected $plugin_version = '3.4.1-beta';
+    protected $plugin_version = '3.5-dev';
 
     /**
      * Unique identifier for your widget.
