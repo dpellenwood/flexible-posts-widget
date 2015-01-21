@@ -123,9 +123,21 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		 * @since    3.5.0
 		 */
 		public function bootstrap() {
+
+			// Register activate/deactivate hooks
 			register_activation_hook( __FILE__, array( $this, 'activate' ) );
 			register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+
+			// Check to see if we need to update the db
 			add_action( 'plugins_loaded', array( $this, 'maybe_update' ), 1 );
+
+			// load plugin text domain
+			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+
+			// Register admin styles and scripts
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+
 		}
 
 		/**
@@ -259,6 +271,65 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		 */
 		public function get_plugin_dir() {
 			return $this->plugin_dir;
+		}
+
+		/**
+		 * Loads the plugin's text domain for localization and translation.
+		 *
+		 * @since   unknown
+		 */
+		public function load_plugin_textdomain() {
+			load_plugin_textdomain( $this->text_domain, false, $this->plugin_dir . 'languages/' );
+		}
+
+		/**
+		 * Registers and enqueues admin-specific styles.
+		 *
+		 * @since   unknown
+		 */
+		public function enqueue_admin_styles() {
+
+			// Set the source for our CSS file.
+			$source = 'css/admin.min.css';
+
+			// Use an uncompressed version for debugging.
+			if( SCRIPT_DEBUG ) {
+				$source = 'css/admin.css';
+			}
+
+			wp_enqueue_style( $this->plugin_slug . '-admin', plugins_url( $source, __FILE__ ), array(), $this->version );
+
+		}
+
+		/**
+		 * Registers and enqueues admin-specific JavaScript.
+		 *
+		 * @since   unknown
+		 */
+		public function enqueue_admin_scripts() {
+
+			// Set the source for our JS file.
+			$source = 'js/admin.min.js';
+
+			// Use an uncompressed version for debugging.
+			if( SCRIPT_DEBUG ) {
+				$source = 'js/admin.js';
+			}
+
+			wp_enqueue_script(
+				$this->plugin_slug . '-admin',
+				plugins_url( $source, __FILE__ ) ,
+				array( 'jquery', 'jquery-ui-tabs' ),
+				$this->version,
+				true
+			);
+
+			wp_localize_script( $this->plugin_slug . '-admin', 'fpwL10n', array(
+				'gettingTerms' => __( 'Getting terms...', $this->text_domain ),
+				'selectTerms'  => __( 'Select terms:', $this->text_domain ),
+				'noTermsFound' => __( 'No terms found.', $this->text_domain ),
+			) );
+
 		}
 
 

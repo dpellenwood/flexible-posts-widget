@@ -90,26 +90,25 @@ class Flexible_Posts_Widget extends WP_Widget {
 	 * loads localization files, and includes necessary stylesheets and JavaScript.
 	 */
 	public function __construct() {
-		
-		// load plugin text domain
-		add_action( 'init', array( $this, 'widget_textdomain' ) );
 
-		// The widget contrstructor
+		$this->version              = $dpe_fpw_plugin->get_version();
+		$this->widget_slug          = $dpe_fpw_plugin->get_slug();
+		$this->widget_text_domain   = $dpe_fpw_plugin->get_text_domain();
+
+		// Set the widget options
+		$widget_opts = array(
+			'description' => __( 'Display posts as widget items.', $this->widget_text_domain ),
+		);
+
+		// The widget constructor
 		parent::__construct(
 			$this->widget_slug,
 			__( 'Flexible Posts Widget', $this->widget_text_domain ),
-			array(
-				//'classname'   => $this->widget_slug,
-				'description' => __( 'Display posts as widget items.', $this->widget_text_domain ),
-			)
+			$widget_opts
 		);
 		
 		// Setup the default variables after wp is loaded
 		add_action( 'wp_loaded', array( $this, 'setup_defaults' ) );
-
-		// Register admin styles and scripts
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
 		
 		// Setup our get terms/AJAX callback
 		add_action( 'wp_ajax_dpe_fp_get_terms', array( &$this, 'terms_checklist' ) );
@@ -344,61 +343,6 @@ class Flexible_Posts_Widget extends WP_Widget {
 		
 	}
 
-	/*--------------------------------------------------*/
-	/* Public Functions
-	/*--------------------------------------------------*/
-
-	/**
-	 * Loads the Widget's text domain for localization and translation.
-	 */
-	public function widget_textdomain() {
-		
-		load_plugin_textdomain( $this->widget_text_domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-		
-	} // end widget_textdomain
-
-	/**
-	 * Registers and enqueues admin-specific styles.
-	 */
-	public function register_admin_styles() {
-
-		wp_enqueue_style(
-			$this->widget_slug . '-admin',
-			plugins_url( 'css/admin.css', __FILE__ ),
-			array(),
-			$this->version
-		);
-
-	} // end register_admin_styles
-
-	/**
-	 * Registers and enqueues admin-specific JavaScript.
-	 */
-	public function register_admin_scripts() {
-		
-		$source = 'js/admin.min.js';
-		
-		if( SCRIPT_DEBUG ) {
-			$source = 'js/admin.js';
-		}
-		
-		wp_enqueue_script(
-			$this->widget_slug . '-admin',
-			plugins_url( $source, __FILE__ ),
-			array( 'jquery', 'jquery-ui-tabs' ),
-			$this->version,
-			true
-		);
-		
-		wp_localize_script( $this->widget_slug . '-admin', 'fpwL10n', array(
-			'gettingTerms' => __( 'Getting terms...', $this->widget_text_domain ),
-			'selectTerms'  => __( 'Select terms:', $this->widget_text_domain ),
-			'noTermsFound' => __( 'No terms found.', $this->widget_text_domain ),
-		) );
-
-	} // end register_admin_scripts
-	
-	
 	/**
 	 * Return a list of terms for the chosen taxonomy
 	 */
