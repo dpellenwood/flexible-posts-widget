@@ -45,6 +45,15 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+/**
+ * Begins execution of the plugin.
+ *
+ * @since    3.5.0
+ */
+global $dpe_fpw_plugin;
+$dpe_fpw_plugin = new FPW_Plugin();
+$dpe_fpw_plugin->bootstrap();
+
 if ( ! class_exists( 'FPW_Plugin' ) ) {
 
 	/**
@@ -336,12 +345,3 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 	} // FPW_Plugin
 
 }
-
-/**
- * Begins execution of the plugin.
- *
- * @since    3.5.0
- */
-global $dpe_fpw_plugin;
-$dpe_fpw_plugin = new FPW_Plugin();
-$dpe_fpw_plugin->bootstrap();
