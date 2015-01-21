@@ -129,8 +129,8 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		 * Do some stuff upon activation
 		 */
 		public function activate() {
-			$this->maybe_update();
 			$this->init_options();
+			$this->maybe_update();
 		}
 
 		/**
@@ -138,7 +138,6 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		 */
 		public function init_options() {
 			update_option( $this->plugin_slug . '_ver', $this->version );
-			add_option( $this->plugin_slug . '_db_ver', $this->db_version );
 		}
 
 		/**
@@ -146,15 +145,18 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		 */
 		public function maybe_update() {
 
+			// this is the current database schema version number
+			$current_db_ver = (int)get_option( $this->plugin_slug . '_db_ver' );
+
 			// bail if this plugin data doesn't need updating
-			if ( get_option( $this->plugin_slug . '_db_ver' ) >= $this->db_version ) {
+			if ( $current_db_ver >= $this->db_version ) {
 				return;
 			}
 
 			// Otherwise, run the updater
 			require_once( $this->plugin_dir . 'includes/class-fpw-plugin-updater.php' );
 			$updater = new FPW_Plugin_Updater( $this->plugin_slug, $this->db_version );
-			$updater->update_plugin();
+			$updater->update_plugin( $current_db_ver );
 
 		}
 

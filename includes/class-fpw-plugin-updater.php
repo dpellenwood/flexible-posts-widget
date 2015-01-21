@@ -57,18 +57,11 @@ class FPW_Plugin_Updater {
 	 *
 	 * @since    3.5.0
 	 */
-	public function update_plugin() {
+	public function update_plugin( $current_db_ver ) {
 
 		// no PHP timeout for running updates
 		// Maybe someday, but our updates are really minor and this is dangerous!
 		//set_time_limit( 0 );
-
-		// this is the current database schema version number
-		$current_db_ver = (int)get_option( $this->plugin_slug . '_db_ver' );
-
-		if ( ! $current_db_ver ) {
-			$current_db_ver = 1;
-		}
 
 		// this is the target version that we need to reach
 		$target_db_ver = $this->db_version;
@@ -104,6 +97,7 @@ class FPW_Plugin_Updater {
 	 */
 	public function dpe_fp_widget_update_routine_2() {
 		// @TODO: Write the upgrade routine.
+		update_option( $this->plugin_slug . '_test', 'testing' );
 	}
 
 }
