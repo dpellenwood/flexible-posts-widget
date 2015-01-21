@@ -8,7 +8,7 @@
 /* global ajaxurl, fpwL10n */
 
 jQuery(function() {
-	
+
 	// Setup the show/hide thumbnails box
 	jQuery('input.dpe-fp-thumbnail').each( function() {
 		if( this.checked ) {
@@ -17,7 +17,7 @@ jQuery(function() {
 			jQuery(this).parent().next().slideUp('fast');
 		}
 	});
-	
+
 	// Enable the Get Em By tabs
 	jQuery('.dpe-fp-widget .getembytabs').tabs({
 		// Set the active tab to a widget option
