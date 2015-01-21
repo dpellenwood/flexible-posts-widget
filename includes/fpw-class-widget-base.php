@@ -4,7 +4,7 @@
  *
  * A collection of widgets to display posts based on different criteria
  *
- * @package           DPE_Flexible_Posts_Widget
+ * @package           Flexible_Posts_Widget
  * @author            DPE WS&D LLC <fpw@dpedesign.com>
  * @license           GPL-2.0+
  * @link              http://flexiblepostswidget.com

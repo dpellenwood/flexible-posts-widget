@@ -5,8 +5,8 @@
  * @link       http://dpedesign.com
  * @since      3.5.0
  *
- * @package    DPE_Flexible_Posts_Widget
- * @subpackage DPE_Flexible_Posts_Widget/includes
+ * @package    Flexible_Posts_Widget
+ * @subpackage Flexible_Posts_Widget/includes
  */
 
 /**
@@ -16,8 +16,8 @@
  * Updated are handled incrementally to make sure no changes are missed.
  *
  * @since      3.5.0
- * @package    DPE_Flexible_Posts_Widget
- * @subpackage DPE_Flexible_Posts_Widget/includes
+ * @package    Flexible_Posts_Widget
+ * @subpackage Flexible_Posts_Widget/includes
  * @author     DPE WS&D LLC <fpw@dpedesign.com>
  */
 class FPW_Plugin_Updater {
