@@ -153,8 +153,10 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 			if ( ! current_user_can( 'activate_plugins' ) )
 				return;
 
+			/* This fails on bulk activate
 			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 			check_admin_referer( "activate-plugin_{$plugin}" );
+			*/
 
 			$this->init_options();
 			$this->maybe_update();
@@ -171,8 +173,11 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 			if ( ! current_user_can( 'activate_plugins' ) )
 				return;
 
+
+			/* This fails on bulk deactivate
 			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 			check_admin_referer( "deactivate-plugin_{$plugin}" );
+			*/
 
 			// Do stuff here.
 
