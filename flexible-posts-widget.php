@@ -216,6 +216,13 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		 */
 		public function maybe_update() {
 
+			// Check the currently stored plugin version and update it if it doesn't match.
+			$current_ver = get_option( $this->plugin_slug . '_ver' );
+
+			if( $current_ver !== $this->version ) {
+				update_option( $this->plugin_slug . '_ver', $this->version );
+			}
+
 			// this is the current database schema version number
 			$current_db_ver = (int)get_option( $this->plugin_slug . '_db_ver' );
 
