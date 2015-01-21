@@ -2,25 +2,22 @@
 /**
  * Flexible Posts Widget
  *
- * A collection of widgets to display posts based on different criteria
+ * @link       http://dpedesign.com
+ * @since      1.0.0
  *
- * @package           Flexible_Posts_Widget
- * @author            DPE WS&D LLC <fpw@dpedesign.com>
- * @license           GPL-2.0+
- * @link              http://flexiblepostswidget.com
- * @copyright         2013 DPE WS&D LLC
+ * @package    Flexible_Posts_Widget
+ * @subpackage Flexible_Posts_Widget/includes
+ */
+
+/**
+ * Flexible Posts Widget.
  *
- * @flexible-posts-widget
- * Plugin Name:       Flexible Posts Widget
- * Plugin URI:        http://flexiblepostswidget.com 
- * Description:       An advanced posts display widget with many options: get posts by post type and taxonomy & term or by post ID; sorting & ordering; feature images; custom templates and more.
- * Version:           3.5.0-dev
- * Author:            dpe415
- * Author URI:        http://dpedesign.com
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       flexible-posts-widget
- * Domain Path:       /languages
+ * The primary widget that has existed since the beginning of FPW time.
+ *
+ * @since      1.0.0
+ * @package    Flexible_Posts_Widget
+ * @subpackage Flexible_Posts_Widget/includes
+ * @author     DPE WS&D LLC <fpw@dpedesign.com>
  */
 
 // If this file is called directly, abort.
@@ -32,7 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Flexible Posts Widget Class
  */
-class DPE_Flexible_Posts_Widget extends WP_Widget {
+class Flexible_Posts_Widget extends WP_Widget {
 
     /**
      * Plugin version number
@@ -645,10 +642,10 @@ class DPE_Flexible_Posts_Widget extends WP_Widget {
 	}
 	
 
-} // class DPE_Flexible_Posts_Widget
+} // class Flexible_Posts_Widget
 
 
 /**
  * Initialize the widget on widgets_init
  */
-add_action( 'widgets_init', create_function( '', 'register_widget("DPE_Flexible_Posts_Widget");' ) );
+add_action( 'widgets_init', create_function( '', 'register_widget("Flexible_Posts_Widget");' ) );
