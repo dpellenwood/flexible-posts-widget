@@ -36,22 +36,22 @@ class Flexible_Posts_Widget extends WP_Widget {
      *
      * The variable name is used as a unique identifier for the widget
      *
-     * @since    3.3.1
-     *
-     * @var      string
+     * @since   3.3.1
+     * @access  private
+     * @var     string
      */
-    protected $plugin_version = '3.5-dev';
+    private $plugin_version;
 
     /**
      * Unique identifier for your widget.
      *
      * The variable name is used as a unique identifier for the widget
      *
-     * @since    1.0.0
-     *
-     * @var      string
+     * @since   1.0.0
+     * @access  private
+     * @var     string
      */
-    protected $widget_slug = 'dpe_fp_widget';
+    private $widget_slug;
     
     /**
      * Unique identifier for your widget.
@@ -60,11 +60,11 @@ class Flexible_Posts_Widget extends WP_Widget {
      * of text. Its value should match the Text Domain file header in the main
      * widget file.
      *
-     * @since    1.0.0
-     *
-     * @var      string
+     * @since   1.0.0
+     * @access  private
+     * @var     string
      */
-    protected $widget_text_domain = 'flexible-posts-widget';
+    private $widget_text_domain;
     
     /**
 	 * Setup a number of variables to hold our default values
