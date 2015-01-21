@@ -10,12 +10,12 @@
  * @link              http://flexiblepostswidget.com
  * @copyright         2013 DPE WS&D LLC
  *
- * @wordpress-plugin
+ * @flexible-posts-widget
  * Plugin Name:       Flexible Posts Widget
  * Plugin URI:        http://flexiblepostswidget.com 
  * Description:       An advanced posts display widget with many options: get posts by post type and taxonomy & term or by post ID; sorting & ordering; feature images; custom templates and more.
  * Version:           3.5.0-dev
- * Author:            DPE WS&D LLC
+ * Author:            dpe415
  * Author URI:        http://dpedesign.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -49,7 +49,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Flexible Posts Widget Class
  */
-class DPE_FPE_Widgets extends WP_Widget {
+class DPE_Flexible_Posts_Widget extends WP_Widget {
 
     /**
      * Plugin version number
