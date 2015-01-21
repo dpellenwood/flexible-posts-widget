@@ -51,9 +51,12 @@ class FPW_Plugin_Updater {
 	}
 
 	/**
-	 * @TODO: Short Description. (use period)
+	 * The main updater method
 	 *
-	 * @TODO: Long Description.
+	 * This method checks the database version saved in the site's options table
+	 * against the version required by this version of the plugin.
+	 * If the site's version is below the plugin's version, it runs an update
+	 * function for each sequential version until the current version is attained.
 	 *
 	 * @since    3.5.0
 	 */
@@ -89,15 +92,66 @@ class FPW_Plugin_Updater {
 	}
 
 	/**
-	 * The update routine for database version 2
+	 * The update routine for database version 2.
 	 *
-	 * @TODO: Long Description.
+	 * This routine is used to update previous version's instance settings.
+	 * Old versions of the plugin used term->slug to store the terms selected in each instance.
+	 * Version 3.5.0 and above will store the term->ID instead of the slug, so we need to run through
+	 * any existing widget instances and convert from term->slug to term->id for each selected term.
 	 *
 	 * @since    3.5.0
 	 */
 	public function dpe_fp_widget_update_routine_2() {
-		// @TODO: Write the upgrade routine.
-		update_option( $this->plugin_slug . '_test', 'testing' );
+
+		// Boolean to check if we actually need to update the widget settings.
+		$needs_update = false;
+
+		// Go get the widget configuration data from the DB and save a backup copy.
+		$options = get_option( 'widget_' . $this->plugin_slug );
+		$options_bk = $options;
+
+		if( $options ) {
+
+			// Run through each instance's settings and check if we need to update...
+			foreach( $options as $key => $value ) {
+
+				// If the taxonomy key is set and not set to none...
+				if( isset( $value['taxonomy'] ) && ! empty( $value['taxonomy'] ) && 'none' != $value['taxonomy'] ) {
+
+					// If we've got terms to convert...
+					if( isset( $value['term'] ) && ! empty( $value['term'] ) ) {
+
+						/**
+						 * Setup the conversion query...
+						 * Get the term IDs for the array of term slugs we have saved in the taxonomy we have saved
+						 */
+						$args = array(
+							'fields' => 'ids',
+							'slug'   => $value['term'],
+						);
+						$term_ids = get_terms( $value['taxonomy'], $args );
+
+						if( ! is_wp_error( $term_ids ) && ! empty( $term_ids ) ) {
+							// As long as we have have a valid term response, set it to this instance's option value.
+							$options[$key]['term'] = $term_ids;
+							$needs_update = true;
+						}
+
+					}
+
+				}
+
+			}
+
+			// Finally, we create a backup of the existing settings and update the settings if the update is required.
+			if( $needs_update ) {
+				$prev_db_ver = $this->db_version - 1;
+				add_option( 'widget_' . $this->plugin_slug . '_backup_v' . $prev_db_ver, $options_bk, '', 'no' );
+				update_option( 'widget_' . $this->plugin_slug, $options );
+			}
+
+		}
+
 	}
 
 }
