@@ -138,6 +138,9 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
+			// Register our widget
+			add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+
 		}
 
 		/**
@@ -330,6 +333,16 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 				'noTermsFound' => __( 'No terms found.', $this->text_domain ),
 			) );
 
+		}
+
+		/**
+		 * Register the main FPW Class for WordPress to use
+		 *
+		 * @since 3.5.0
+		 */
+		public function register_widgets() {
+			require_once( $this->plugin_dir . 'includes/class-fpw-widget.php' );
+			register_widget( 'Flexible_Posts_Widget' );
 		}
 
 

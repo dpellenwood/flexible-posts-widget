@@ -91,6 +91,8 @@ class Flexible_Posts_Widget extends WP_Widget {
 	 */
 	public function __construct() {
 
+		global $dpe_fpw_plugin;
+
 		$this->version              = $dpe_fpw_plugin->get_version();
 		$this->widget_slug          = $dpe_fpw_plugin->get_slug();
 		$this->widget_text_domain   = $dpe_fpw_plugin->get_text_domain();
@@ -554,9 +556,3 @@ class Flexible_Posts_Widget extends WP_Widget {
 	
 
 } // class Flexible_Posts_Widget
-
-
-/**
- * Initialize the widget on widgets_init
- */
-add_action( 'widgets_init', create_function( '', 'register_widget("Flexible_Posts_Widget");' ) );
