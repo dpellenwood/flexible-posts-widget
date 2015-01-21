@@ -113,7 +113,7 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 			$this->plugin_slug  = 'dpe_fp_widget';
 			$this->version      = '3.5.0';
 			$this->db_version   = 2;
-			$this->text_domain  = 'flexible-post-widget';
+			$this->text_domain  = 'flexible-posts-widget';
 			$this->plugin_dir   = plugin_dir_path( __FILE__ );
 		}
 
