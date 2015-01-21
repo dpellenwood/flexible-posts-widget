@@ -151,7 +151,7 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 			}
 
 			// Otherwise, run the updater
-			require_once( $this->plugin_dir . 'includes/class-fpw-update.php' );
+			require_once( $this->plugin_dir . 'includes/class-fpw-plugin-updater.php' );
 			$updater = new FPW_Plugin_Updater( $this->plugin_slug, $this->db_version );
 			$updater->update_plugin();
 
