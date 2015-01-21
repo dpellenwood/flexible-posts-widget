@@ -60,10 +60,15 @@ class FPW_Plugin_Updater {
 	public function update_plugin() {
 
 		// no PHP timeout for running updates
-		set_time_limit( 0 );
+		// Maybe someday, but our updates are really minor and this is dangerous!
+		//set_time_limit( 0 );
 
 		// this is the current database schema version number
-		$current_db_ver = get_option( $this->plugin_slug . '_db_ver' );
+		$current_db_ver = (int)get_option( $this->plugin_slug . '_db_ver' );
+
+		if ( ! $current_db_ver ) {
+			$current_db_ver = 1;
+		}
 
 		// this is the target version that we need to reach
 		$target_db_ver = $this->db_version;
@@ -78,7 +83,7 @@ class FPW_Plugin_Updater {
 			// each db version will require a separate update function
 			// for example, for db_ver 3, the function name should be solis_update_routine_3
 			$function_name = $this->plugin_slug . '_update_routine_' . $current_db_ver;
-			if ( function_exists( array( $this, $function_name ) ) ) {
+			if ( method_exists( $this, $function_name ) ) {
 				call_user_func( array( $this, $function_name ) );
 			}
 
@@ -98,7 +103,7 @@ class FPW_Plugin_Updater {
 	 * @since    3.5.0
 	 */
 	public function dpe_fp_widget_update_routine_2() {
-		update_option( 'dpe_test', '2' ); // @TODO: Write the upgrade routine.
+		// @TODO: Write the upgrade routine.
 	}
 
 }
