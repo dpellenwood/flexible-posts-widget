@@ -118,19 +118,70 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		}
 
 		/**
-		 * Setup the environment for the plugin
+		 * Setup the environment for the plugin.
+		 * *
+		 * @since    3.5.0
 		 */
 		public function bootstrap() {
 			register_activation_hook( __FILE__, array( $this, 'activate' ) );
+			//register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 			add_action( 'plugins_loaded', array( $this, 'maybe_update' ), 1 );
 		}
 
 		/**
 		 * Do some stuff upon activation
+		 *
+		 * @since    3.5.0
 		 */
 		public function activate() {
+
+			if ( ! current_user_can( 'activate_plugins' ) )
+				return;
+
+			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+			check_admin_referer( "activate-plugin_{$plugin}" );
+
 			$this->init_options();
 			$this->maybe_update();
+
+		}
+
+		/**
+		 * Do some stuff upon deactivation
+		 *
+		 * @since    3.5.0
+		 */
+		public function deactivate() {
+
+			if ( ! current_user_can( 'activate_plugins' ) )
+				return;
+
+			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+			check_admin_referer( "activate-plugin_{$plugin}" );
+
+			// Do stuff here.
+
+		}
+
+		/**
+		 * Do some stuff upon uninstall
+		 *
+		 * @since    3.5.0
+		 */
+		public function uninstall() {
+
+			if ( ! current_user_can( 'activate_plugins' ) )
+				return;
+
+			check_admin_referer( 'bulk-plugins' );
+
+			// Important: Check if the file is the one
+			// that was registered during the uninstall hook.
+			if ( __FILE__ != WP_UNINSTALL_PLUGIN )
+				return;
+
+			// Do stuff here.
+
 		}
 
 		/**
