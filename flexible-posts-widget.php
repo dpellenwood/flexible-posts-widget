@@ -128,8 +128,8 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		 * Do some stuff upon activation
 		 */
 		public function activate() {
-			$this->init_options();
 			$this->maybe_update();
+			$this->init_options();
 		}
 
 		/**
