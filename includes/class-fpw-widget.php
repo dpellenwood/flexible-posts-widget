@@ -40,7 +40,7 @@ class Flexible_Posts_Widget extends WP_Widget {
      * @access  private
      * @var     string
      */
-    private $plugin_version;
+    private $version;
 
     /**
      * Unique identifier for your widget.
@@ -96,11 +96,11 @@ class Flexible_Posts_Widget extends WP_Widget {
 
 		// The widget contrstructor
 		parent::__construct(
-			$this->get_widget_slug(),
-			__( 'Flexible Posts Widget', $this->get_widget_text_domain() ),
+			$this->widget_slug,
+			__( 'Flexible Posts Widget', $this->widget_text_domain ),
 			array(
-				//'classname'   => $this->get_widget_slug(),
-				'description' => __( 'Display posts as widget items.', $this->get_widget_text_domain() ),
+				//'classname'   => $this->widget_slug,
+				'description' => __( 'Display posts as widget items.', $this->widget_text_domain ),
 			)
 		);
 		
@@ -114,39 +114,6 @@ class Flexible_Posts_Widget extends WP_Widget {
 		// Setup our get terms/AJAX callback
 		add_action( 'wp_ajax_dpe_fp_get_terms', array( &$this, 'terms_checklist' ) );
 		
-	}
-	
-	/**
-	 * Return the widget slug.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @return    Plugin slug variable.
-	 */
-	public function get_widget_slug() {
-		return $this->widget_slug;
-	}
-
-	/**
-	 * Return the widget text domain.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @return    Plugin text domain variable.
-	 */
-	public function get_widget_text_domain() {
-		return $this->widget_text_domain;
-	}
-	
-	/**
-	 * Return the plugin version.
-	 *
-	 * @since    3.3.1
-	 *
-	 * @return    Plugin version variable.
-	 */
-	public function get_plugin_version() {
-		return $this->plugin_version;
 	}
 
 
@@ -369,7 +336,7 @@ class Flexible_Posts_Widget extends WP_Widget {
 		$file = 'views/' . $template;
 
 		// Look for a custom version
-		if ( $theme_file = locate_template( array( $this->get_widget_text_domain() . '/' . $template ) ) ) {
+		if ( $theme_file = locate_template( array( $this->widget_text_domain . '/' . $template ) ) ) {
 			$file = $theme_file;
 		}
 		
@@ -386,7 +353,7 @@ class Flexible_Posts_Widget extends WP_Widget {
 	 */
 	public function widget_textdomain() {
 		
-		load_plugin_textdomain( $this->get_widget_text_domain(), false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( $this->widget_text_domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		
 	} // end widget_textdomain
 
@@ -396,10 +363,10 @@ class Flexible_Posts_Widget extends WP_Widget {
 	public function register_admin_styles() {
 
 		wp_enqueue_style(
-			$this->get_widget_slug() . '-admin',
+			$this->widget_slug . '-admin',
 			plugins_url( 'css/admin.css', __FILE__ ),
 			array(),
-			$this->get_plugin_version()
+			$this->version
 		);
 
 	} // end register_admin_styles
@@ -416,17 +383,17 @@ class Flexible_Posts_Widget extends WP_Widget {
 		}
 		
 		wp_enqueue_script(
-			$this->get_widget_slug() . '-admin',
+			$this->widget_slug . '-admin',
 			plugins_url( $source, __FILE__ ),
 			array( 'jquery', 'jquery-ui-tabs' ),
-			$this->get_plugin_version(),
+			$this->version,
 			true
 		);
 		
-		wp_localize_script( $this->get_widget_slug() . '-admin', 'fpwL10n', array(
-			'gettingTerms' => __( 'Getting terms...', $this->get_widget_text_domain() ),
-			'selectTerms'  => __( 'Select terms:', $this->get_widget_text_domain() ),
-			'noTermsFound' => __( 'No terms found.', $this->get_widget_text_domain() ),
+		wp_localize_script( $this->widget_slug . '-admin', 'fpwL10n', array(
+			'gettingTerms' => __( 'Getting terms...', $this->widget_text_domain ),
+			'selectTerms'  => __( 'Select terms:', $this->widget_text_domain ),
+			'noTermsFound' => __( 'No terms found.', $this->widget_text_domain ),
 		) );
 
 	} // end register_admin_scripts
@@ -475,7 +442,7 @@ class Flexible_Posts_Widget extends WP_Widget {
 			$output .= $terms_html;
 			$output .= "</ul>\n";
 		} else {
-			$output = '<p>' . __( 'No terms found.', $this->get_widget_text_domain() ) . '</p>';
+			$output = '<p>' . __( 'No terms found.', $this->widget_text_domain ) . '</p>';
 		}
 
 		echo ( $output );
@@ -523,22 +490,22 @@ class Flexible_Posts_Widget extends WP_Widget {
 		
 		// Set the options for orderby
 		$this->orderbys = array(
-			'date'		 	=> __( 'Publish Date', $this->get_widget_text_domain() ),
-			'modified'		=> __( 'Modified Date', $this->get_widget_text_domain() ),
-			'title'			=> __( 'Title', $this->get_widget_text_domain() ),
-			'menu_order'	=> __( 'Menu Order', $this->get_widget_text_domain() ),
-			'ID'			=> __( 'Post ID', $this->get_widget_text_domain() ),
-			'author'		=> __( 'Author', $this->get_widget_text_domain() ),
-			'name'	 		=> __( 'Post Slug', $this->get_widget_text_domain() ),
-			'comment_count'	=> __( 'Comment Count', $this->get_widget_text_domain() ),
-			'rand'			=> __( 'Random', $this->get_widget_text_domain() ),
-			'post__in'		=> __( 'Post ID Order', $this->get_widget_text_domain() ),
+			'date'		 	=> __( 'Publish Date', $this->widget_text_domain ),
+			'modified'		=> __( 'Modified Date', $this->widget_text_domain ),
+			'title'			=> __( 'Title', $this->widget_text_domain ),
+			'menu_order'	=> __( 'Menu Order', $this->widget_text_domain ),
+			'ID'			=> __( 'Post ID', $this->widget_text_domain ),
+			'author'		=> __( 'Author', $this->widget_text_domain ),
+			'name'	 		=> __( 'Post Slug', $this->widget_text_domain ),
+			'comment_count'	=> __( 'Comment Count', $this->widget_text_domain ),
+			'rand'			=> __( 'Random', $this->widget_text_domain ),
+			'post__in'		=> __( 'Post ID Order', $this->widget_text_domain ),
 		);
 		
 		// Set the options for order
 		$this->orders = array(
-			'ASC'	=> __( 'Ascending', $this->get_widget_text_domain() ),
-			'DESC'	=> __( 'Descending', $this->get_widget_text_domain() ),
+			'ASC'	=> __( 'Ascending', $this->widget_text_domain ),
+			'DESC'	=> __( 'Descending', $this->widget_text_domain ),
 		);
 		
 		// Set the available templates
@@ -569,7 +536,7 @@ class Flexible_Posts_Widget extends WP_Widget {
 	public function get_files( $type = null, $depth = 0, $search_parent = false ) {
 		
 		$files = array();
-		$theme_dir = get_stylesheet_directory() . '/' . $this->get_widget_text_domain();
+		$theme_dir = get_stylesheet_directory() . '/' . $this->widget_text_domain;
 		$plugin_dir = dirname(__FILE__) . '/views';
 		
 		// Check the current theme
@@ -579,7 +546,7 @@ class Flexible_Posts_Widget extends WP_Widget {
 
 		// Check the parent theme
 		if ( $search_parent && is_child_theme() ) {
-			$parent_theme_dir = get_template_directory() . '/' . $this->get_widget_text_domain();
+			$parent_theme_dir = get_template_directory() . '/' . $this->widget_text_domain;
 			if( is_dir( $parent_theme_dir ) ) {
 				$files += (array) self::scandir( $parent_theme_dir, $type, $depth );
 			}
