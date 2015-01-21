@@ -122,6 +122,7 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		 */
 		public function bootstrap() {
 			register_activation_hook( __FILE__, array( $this, 'activate' ) );
+			add_action( 'plugins_loaded', array( $this, 'maybe_update' ), 1 );
 		}
 
 		/**
