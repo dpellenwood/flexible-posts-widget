@@ -65,6 +65,15 @@ class Flexible_Posts_Widget extends WP_Widget {
      * @var     string
      */
     private $widget_text_domain;
+
+	/**
+	 * The directory path for the plugin.
+	 *
+	 * @since    3.5.0
+	 * @access   private
+	 * @var      string    $plugin_dir    The directory path to the plugin.
+	 */
+	private $plugin_dir;
     
     /**
 	 * Setup a number of variables to hold our default values
@@ -96,6 +105,7 @@ class Flexible_Posts_Widget extends WP_Widget {
 		$this->version              = $dpe_fpw_plugin->get_version();
 		$this->widget_slug          = $dpe_fpw_plugin->get_slug();
 		$this->widget_text_domain   = $dpe_fpw_plugin->get_text_domain();
+		$this->plugin_dir           = $dpe_fpw_plugin->get_plugin_dir();
 
 		// Set the widget options
 		$widget_opts = array(
@@ -334,7 +344,7 @@ class Flexible_Posts_Widget extends WP_Widget {
 		$template = $template_slug . '.php';
 		
 		// Set to the default
-		$file = 'views/' . $template;
+		$file = $this->plugin_dir . 'views/' . $template;
 
 		// Look for a custom version
 		if ( $theme_file = locate_template( array( $this->widget_text_domain . '/' . $template ) ) ) {
@@ -483,7 +493,7 @@ class Flexible_Posts_Widget extends WP_Widget {
 		
 		$files = array();
 		$theme_dir = get_stylesheet_directory() . '/' . $this->widget_text_domain;
-		$plugin_dir = dirname(__FILE__) . '/views';
+		$plugin_dir = $this->plugin_dir . '/views';
 		
 		// Check the current theme
 		if( is_dir( $theme_dir ) ) {
@@ -553,6 +563,5 @@ class Flexible_Posts_Widget extends WP_Widget {
 
 		return $files;
 	}
-	
 
 } // class Flexible_Posts_Widget
