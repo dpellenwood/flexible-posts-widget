@@ -124,7 +124,7 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 		 */
 		public function bootstrap() {
 			register_activation_hook( __FILE__, array( $this, 'activate' ) );
-			//register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+			register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 			add_action( 'plugins_loaded', array( $this, 'maybe_update' ), 1 );
 		}
 
@@ -157,7 +157,7 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 				return;
 
 			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
-			check_admin_referer( "activate-plugin_{$plugin}" );
+			check_admin_referer( "deactivate-plugin_{$plugin}" );
 
 			// Do stuff here.
 
