@@ -217,6 +217,6 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
  *
  * @since    3.5.0
  */
-global $dpe_fp_widget;
-$dpe_fp_widget = new FPW_Plugin();
-$dpe_fp_widget->bootstrap();
+global $dpe_fpw_plugin;
+$dpe_fpw_plugin = new FPW_Plugin();
+$dpe_fpw_plugin->bootstrap();
