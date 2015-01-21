@@ -49,7 +49,11 @@ if ( !defined( 'ABSPATH' ) )
 					</p>
 					<label <?php echo 'none' == $instance['taxonomy'] ? ' style="display:none;"' : ''; ?>><?php _e( 'Select terms:', $this->widget_text_domain ); ?></label> 
 					<div class="terms" <?php echo 'none' == $instance['taxonomy'] ? ' style="display:none;"' : ''; ?>>
-						<?php $this->terms_checklist( $instance['taxonomy'], $instance['term'] ); ?>
+						<?php
+							if( 'none' != $instance['taxonomy'] ) {
+								$this->terms_checklist( $instance['taxonomy'], $instance['term'] );
+							}
+						?>
 					</div>
 				</div><!-- .tt.getemby -->
 				
