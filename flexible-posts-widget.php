@@ -129,7 +129,7 @@ if ( ! class_exists( 'FPW_Plugin' ) ) {
 			register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 
 			// Check to see if we need to update the db
-			add_action( 'plugins_loaded', array( $this, 'maybe_update' ), 1 );
+			add_action( 'wp_loaded', array( $this, 'maybe_update' ), 1 );
 
 			// load plugin text domain
 			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
