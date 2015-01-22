@@ -8,7 +8,7 @@
 /* global ajaxurl, fpwL10n */
 
 jQuery(function() {
-	
+
 	// Setup the show/hide thumbnails box
 	jQuery('input.dpe-fp-thumbnail').each( function() {
 		if( this.checked ) {
@@ -17,7 +17,7 @@ jQuery(function() {
 			jQuery(this).parent().next().slideUp('fast');
 		}
 	});
-	
+
 	// Enable the Get Em By tabs
 	jQuery('.dpe-fp-widget .getembytabs').tabs({
 		// Set the active tab to a widget option
@@ -60,22 +60,18 @@ jQuery('#widgets-right').on('change', 'select.dpe-fp-taxonomy', function() {
 	
 	var terms_div		= jQuery(this).parent().nextAll('div.terms'),
 		terms_label		= jQuery(this).parent().next('label'),
-		selected_terms	= [], data = {};
-	
+		widget_id       = jQuery(this).parents('form').find('input.widget_number'),
+		data            = {};
+
 	// If we're not ignoring Taxonomy & Term...
 	if( jQuery(this).val() !== 'none' ) {
 		
 		terms_label.html(fpwL10n.gettingTerms).show();
-		
-		terms_div.find('input:checked').each(function () {
-			selected_terms.push( jQuery(this).val() );
-		});
-		
+
 		data = {
-			action:    'dpe_fp_get_terms',
-			taxonomy:  jQuery(this).val(),
-			term:      selected_terms,
-			fpwNounce: fpwL10n.fpwNounce
+			action:     'dpe_fp_get_terms',
+			widget_id:  widget_id.val(),
+			taxonomy:   jQuery(this).val()
 		};
 		
 		jQuery.post(ajaxurl, data, function(response) {

@@ -4,14 +4,14 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: widget, widgets, posts, categories, tags, recent posts, thumbnails, custom post types, custom taxonomies, feature image
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 3.4.1
+Stable tag: 3.5.0
 License: GPL2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 An advanced posts display widget with many options. Display posts in your sidebars any way you'd like!
 
 == Description ==
-The default Recent Posts widget is exceptionally basic. I always find myself in need of a way to easily display a selection of posts from any combination post type or taxonomy. Hence, Flexible Post Widget.
+The default Recent Posts widget is exceptionally basic. I always find myself in need of a way to easily display a selection of posts from any combination post type or taxonomy. Hence, Flexible Posts Widget.
 
 Flexible Posts Widget (FPW) is more than just a simple alternative to the default Recent Posts widget.  With many per-instance options it is highly customizable and allows advanced users to display the resulting posts virtually any way imaginable.
 
@@ -23,6 +23,7 @@ Flexible Posts Widget (FPW) is more than just a simple alternative to the defaul
 * Select the post feature image size to display from existing image sizes: thumbnail, medium, large, post-thumbnail or any size defined by the current theme.
 * Order posts by: date, modified date, ID, title, menu order, random, Post ID Order; and sort posts: ascending or descending.
 * Each widget's output can be customized by user-defined templates added to the current theme folder.
+* Multi Language support. Compatible with [WPML](http://wpml.org/) and [PolyLang](https://wordpress.org/plugins/polylang/) for sure. Not tested with other multi-language plugins, but it should work.
 
 = Supported Languages =
 * English
@@ -62,8 +63,9 @@ The number, in this case 1280, is the post ID.
 You'll want to create a custom HTML template by following [the instructions](http://wordpress.org/extend/plugins/flexible-posts-widget/installation/ "View instructions for creating custom FPW templates") and then you can use the standard WordPress [Custom Field](http://codex.wordpress.org/Custom_Fields "View custom field functions on the WordPress Codex") functions the same way you would if you were editing your theme's other template files.
 
 A simple code example for a custom field named "test_field" _might_ look like the following:
-`$test_field_value = get_post_meta( get_the_ID(), 'test_field', true );
-echo $test_field_value;`
+
+` $test_field_value = get_post_meta( get_the_ID(), 'test_field', true );
+echo $test_field_value; `
 
 = How can I style the images, titles or other widget output a certain way? =
 FPW intentionally does NOT add any styling of it's own.  To adjust the font size, color, alignment, image size, etc. of any output from this widget, you'll need to edit your theme's styles.
@@ -86,16 +88,14 @@ To get answers to your questions, request help or submit a bug report, please st
 1. In the wild: FPW displaying a selection media attachments, with custom thumbnails.  This example uses highly customized HTML output and very theme-specific styles.
 1. In the wild: FPW displaying several posts over at http://chnl7700.mnsu.edu.  Also highly customized output and theme styles.
 
-== Upgrade Notice ==
-When upgrading from one major version to another (version 1.x to version 2.x to version 3.x, etc), please remember to verify your settings for any existing widgets.  Not all settings combinations will be saved after a major release upgrade.
-
 == Other Notes ==
-= Upgrading from one major version to another =
-When upgrading between major releases (version 1.x to version 2.x to version 3.x, etc), please remember to verify your settings for any existing widgets.  Not all settings combinations will be saved after a major release upgrade.
+= Plugin Hooks =
+Flexible posts widget currently has two public hooks:
+
+* Filter: [`dpe_fpw_args`](https://plugins.trac.wordpress.org/browser/flexible-posts-widget/trunk/includes/class-fpw-widget.php#L191) allows filtering the query vars before submitting the widget posts query.
+* Filter: [`dpe_fpw_template_{$template_name}`](https://plugins.trac.wordpress.org/browser/flexible-posts-widget/trunk/includes/class-fpw-widget.php#L354) filters the template file path used to display the widget output.
 
 = Future updates & feature requests list =
-* Multilingual support (Polylang, WPML, etc.)
-* Make Tax-Term drop-down hierarchical.
 * Use search box instead of ID text field for post id's
 * Shortcode functionality.
 * Get posts by Author.
@@ -103,8 +103,16 @@ When upgrading between major releases (version 1.x to version 2.x to version 3.x
 * Get posts from the same archive (term/post type/etc).
 * Limit results by a time period.
 
+== Upgrade Notice ==
+= 3.5.0 =
+Added multi-language support (WPML & PolyLang) and nested terms in the taxonomy & term select box. The plugin now updates widget settings in the background on update (if necessary).
 
 == Changelog ==
+= 3.5.0 =
+* Major codebase rewrite to prepare for additional widgets, options.
+* Automatically updates any widget settings when the plugin is updated to a new version
+* Multi Language support (WPML & PolyLang)
+* Term selection box now uses built-in WordPress function [`wp_terms_checklist()`](http://codex.wordpress.org/Function_Reference/wp_terms_checklist). This provides support for visually displaying nested terms and brings the plugin into compliance with WordPress code.
 
 = 3.4.1 =
 * Version bump for WordPress 4.1 support.
@@ -112,7 +120,7 @@ When upgrading between major releases (version 1.x to version 2.x to version 3.x
 = 3.4 =
 * Added Finnish language support. (Props: @eccola)
 * Made the Template Filename field a select box based on the templates available in the current theme, the parent theme (if the current theme is a child theme) and the plugin's views folder. (Props @w3b-beweb)
-* Added a new default template (`Default.php`) that works better in most sidebar situations.  The current default template (`Widget.php`) will be used by any existing widgets unless manually changed.
+* Added a new default template `Default.php` that works better in most sidebar situations.  The current default template `Widget.php` will be used by any existing widgets unless manually changed.
 * Added support to order posts by Modified Date.
 * Migrated admin CSS to SASS.
 * Much code clean up and refactoring.
@@ -124,7 +132,7 @@ When upgrading between major releases (version 1.x to version 2.x to version 3.x
 
 = 3.3 =
 * Refactored the PHP Class to encapsulate the plugin.
-* Added the ability to sort posts by "Post ID Order".  Useful when getting posts using the ID tab (`post__in`). (Props: @cinus89)
+* Added the ability to sort posts by "Post ID Order".  Useful when getting posts using the ID tab `post__in`. (Props: @cinus89)
 * Added Russian translation. (Props: @mizhgun)
 * Tested To bump for WordPress 3.9 support.
 
@@ -138,7 +146,7 @@ When upgrading between major releases (version 1.x to version 2.x to version 3.x
 * Added option to ignore sticky posts.
 * Added support to get post by post ID directly.
 * Added Polish language support. (Props: @Invens)
-* Added a few filters: `dpe_fpw_args` to filter the query vars before submitting the query and `'dpe_fpw_template_' . [$template_name]` to filter the selected template.
+* Added a few filters: `dpe_fpw_args` to filter the query vars before submitting the query and `dpe_fpw_template_{$template_name}` to filter the selected template.
 
 = 3.1.2 =
 * Fixed several pesky PHP notices. (Props: @eeb1)
