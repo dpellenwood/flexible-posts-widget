@@ -62,9 +62,7 @@ class FPW_Plugin_Updater {
 	 */
 	public function update_plugin( $current_db_ver ) {
 
-		// no PHP timeout for running updates
-		// Maybe someday, but our updates are really minor and this is dangerous!
-		//set_time_limit( 0 );
+		set_time_limit( 0 );
 
 		// this is the target version that we need to reach
 		$target_db_ver = $this->db_version;
