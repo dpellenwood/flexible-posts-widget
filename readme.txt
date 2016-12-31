@@ -25,14 +25,6 @@ Flexible Posts Widget (FPW) is more than just a simple alternative to the defaul
 * Each widget's output can be customized by user-defined templates added to the current theme folder.
 * Multi Language support. Compatible with [WPML](http://wpml.org/) and [PolyLang](https://wordpress.org/plugins/polylang/) for sure. Not tested with other multi-language plugins, but it should work.
 
-= Supported Languages =
-* English
-* Finnish
-* Italian
-* Polish
-* Russian
-* Spanish
-
 == Installation ==
 1. Upload the `flexible-posts-widget` folder to the `/wp-content/plugins/` directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
